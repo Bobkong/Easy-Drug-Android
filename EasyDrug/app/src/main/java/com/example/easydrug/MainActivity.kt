@@ -6,14 +6,18 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.easydrug.NetService.Api.SignService
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 
 class MainActivity : AppCompatActivity() {
 
+    private val TAG = "MainActivity"
     private var startScan: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +34,11 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+
+        SignService.getInstance().signUp("1234", "123").observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                Log.i(TAG, it)
+            }
     }
 
     override fun onRequestPermissionsResult(

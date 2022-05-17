@@ -4,6 +4,7 @@ package com.example.easydrug.NetService.Api;
 import com.example.easydrug.NetService.HttpResultFunc;
 import com.example.easydrug.NetService.ServerResultFunc;
 import com.example.easydrug.NetService.ServiceManager;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +20,16 @@ public class SignService {
         return instance;
     }
 
-    private final SignApi recipeApi= ServiceManager.getInstance().create(SignApi.class);
+    private final SignApi signApi= ServiceManager.getInstance().create(SignApi.class);
 
     public Observable<String> signUp(String username, String password){
-        return recipeApi.signUp(username, password)
-                .map(new ServerResultFunc<>())
+        return signApi.signUp(new User(username, password))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
     public Observable<String> signIn(String username, String password){
-        return recipeApi.signIn(username, password)
-                .map(new ServerResultFunc<>())
+        return signApi.signIn(new User(username, password))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }

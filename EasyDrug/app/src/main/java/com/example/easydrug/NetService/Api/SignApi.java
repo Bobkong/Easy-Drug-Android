@@ -1,10 +1,15 @@
 package com.example.easydrug.NetService.Api;
 
 
+import com.google.gson.JsonObject;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -14,16 +19,15 @@ import retrofit2.http.Query;
 public interface SignApi {
     //sign up
     @POST("/signup")
-    Observable<Response<String>> signUp(
-            @Field("username") String username,
-            @Field("password") String password
-    );
+    Observable<String> signUp(
+            @Body User params
+            );
+
 
     //sign in
     @POST("/login")
-    Observable<Response<String>> signIn(
-            @Field("username") String username,
-            @Field("password") String password
+    Observable<String> signIn(
+            @Body User params
             );
 
 }

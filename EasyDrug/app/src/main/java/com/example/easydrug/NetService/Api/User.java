@@ -1,17 +1,19 @@
 package com.example.easydrug.NetService.Api;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
+
 public class User implements Serializable {
+	@SerializedName("username")
+	String username;
+	@SerializedName("password")
+	String password;
 
-	private String username;
-
-
-	public String getName() {
-		return username;
-	}
-
-	public void setName(String name) {
-		this.username = name;
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
 	}
 }
+
