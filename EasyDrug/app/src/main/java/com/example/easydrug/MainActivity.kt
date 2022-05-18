@@ -35,9 +35,9 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        SignService.getInstance().signUp("1234", "123").observeOn(AndroidSchedulers.mainThread())
+        SignService.getInstance().signUp("123", "123").observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                Log.i(TAG, it)
+                Toast.makeText(this, it.string(), Toast.LENGTH_SHORT).show()
             }
     }
 

@@ -11,6 +11,7 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 
 public class SignService {
     private static SignService instance;
@@ -22,13 +23,13 @@ public class SignService {
 
     private final SignApi signApi= ServiceManager.getInstance().create(SignApi.class);
 
-    public Observable<String> signUp(String username, String password){
+    public Observable<ResponseBody> signUp(String username, String password){
         return signApi.signUp(new User(username, password))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
-    public Observable<String> signIn(String username, String password){
+    public Observable<ResponseBody> signIn(String username, String password){
         return signApi.signIn(new User(username, password))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());

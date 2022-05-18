@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -19,14 +20,14 @@ import retrofit2.http.Query;
 public interface SignApi {
     //sign up
     @POST("/signup")
-    Observable<String> signUp(
+    Observable<ResponseBody> signUp(
             @Body User params
             );
 
 
     //sign in
     @POST("/login")
-    Observable<String> signIn(
+    Observable<ResponseBody> signIn(
             @Body User params
             );
     //test git connect
