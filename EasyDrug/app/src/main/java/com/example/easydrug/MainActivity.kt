@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.example.easydrug.NetService.Api.DrugService
 import com.example.easydrug.NetService.Api.SignService
 import io.reactivex.android.schedulers.AndroidSchedulers
 
@@ -39,6 +40,19 @@ class MainActivity : AppCompatActivity() {
             .subscribe {
                 Toast.makeText(this, it.string(), Toast.LENGTH_SHORT).show()
             }
+
+
+        DrugService.getInstance().getDrugList("1234", "123").observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if (it != null && it.drugList != null && it.drugList.size != 0) {
+                    Log.i(TAG, it.drugList.size.toString())
+                } else {
+                    Log.i(TAG, "drug list is null")
+                }
+
+            }
+
+
     }
 
     override fun onRequestPermissionsResult(

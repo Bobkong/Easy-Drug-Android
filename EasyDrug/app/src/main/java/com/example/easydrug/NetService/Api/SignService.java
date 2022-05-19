@@ -2,15 +2,11 @@ package com.example.easydrug.NetService.Api;
 
 
 import com.example.easydrug.NetService.HttpResultFunc;
-import com.example.easydrug.NetService.ServerResultFunc;
 import com.example.easydrug.NetService.ServiceManager;
-import com.google.gson.JsonObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
+import model.User;
 import okhttp3.ResponseBody;
 
 public class SignService {

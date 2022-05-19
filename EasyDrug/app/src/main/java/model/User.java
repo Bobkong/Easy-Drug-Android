@@ -1,4 +1,4 @@
-package com.example.easydrug.NetService.Api;
+package model;
 
 import com.google.gson.annotations.SerializedName;
 
