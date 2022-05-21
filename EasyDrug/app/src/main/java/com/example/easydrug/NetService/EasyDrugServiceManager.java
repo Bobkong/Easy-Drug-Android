@@ -20,7 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ServiceManager {
+public class EasyDrugServiceManager {
     //域名
     private static final String baseUrl="http://20.231.217.74:10000";
     //连接超时
@@ -38,9 +38,9 @@ public class ServiceManager {
     //无网络时，缓存超时时间为7天
     private static final int MAX_STALE=60*60*24;
     //单例模式
-    private static ServiceManager instance;
+    private static EasyDrugServiceManager instance;
     private Retrofit retrofit;
-    private ServiceManager(){
+    private EasyDrugServiceManager(){
         //设置缓存目录
         File cacheFile=new File(MyApplication.getContext().getExternalCacheDir(),CACHE_Dir);
         //设置缓存
@@ -93,9 +93,9 @@ public class ServiceManager {
     }
 
     //单例，懒汉式线程安全
-    public static synchronized ServiceManager getInstance(){
+    public static synchronized EasyDrugServiceManager getInstance(){
         if(instance==null)
-            instance=new ServiceManager();
+            instance=new EasyDrugServiceManager();
         return instance;
     }
 

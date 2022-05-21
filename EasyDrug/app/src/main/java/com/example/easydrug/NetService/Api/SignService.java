@@ -2,7 +2,7 @@ package com.example.easydrug.NetService.Api;
 
 
 import com.example.easydrug.NetService.HttpResultFunc;
-import com.example.easydrug.NetService.ServiceManager;
+import com.example.easydrug.NetService.EasyDrugServiceManager;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
@@ -17,7 +17,7 @@ public class SignService {
         return instance;
     }
 
-    private final SignApi signApi= ServiceManager.getInstance().create(SignApi.class);
+    private final SignApi signApi= EasyDrugServiceManager.getInstance().create(SignApi.class);
 
     public Observable<ResponseBody> signUp(String username, String password){
         return signApi.signUp(new User(username, password))

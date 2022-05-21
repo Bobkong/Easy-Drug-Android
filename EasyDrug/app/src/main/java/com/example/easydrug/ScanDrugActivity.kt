@@ -1,15 +1,17 @@
 package com.example.easydrug
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.os.Vibrator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import cn.bingoogolapple.qrcode.core.QRCodeView
 import cn.bingoogolapple.qrcode.zbar.ZBarView
+import com.example.easydrug.NetService.Api.DrugLookUpService
+import io.reactivex.android.schedulers.AndroidSchedulers
 
 class ScanDrugActivity: AppCompatActivity(), QRCodeView.Delegate {
 
+    private val TAG = "ScanDrugActivity"
     private var mZBarView: ZBarView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +42,22 @@ class ScanDrugActivity: AppCompatActivity(), QRCodeView.Delegate {
 
     override fun onScanQRCodeSuccess(result: String?) {
         vibrate()
-        Toast.makeText(this, result, Toast.LENGTH_SHORT).show()
         mZBarView?.stopSpot()
+
+        result?.let {
+            DrugLookUpService.getInstance().drugLookUp(it).observeOn(AndroidSchedulers.mainThread())
+                .subscribe { drug ->
+                    if (drug.items != null && drug.items.size != 0) {
+                        // ensure scanning a drug
+                        if (drug.items[0].category.startsWith("Health")) {
+                            Toast.makeText(this, drug.items[0].title, Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(this, "Please scan a drug", Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+                }
+        }
     }
 
     override fun onCameraAmbientBrightnessChanged(isDark: Boolean) {

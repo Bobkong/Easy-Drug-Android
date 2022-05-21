@@ -36,21 +36,21 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        SignService.getInstance().signUp("123", "123").observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                Toast.makeText(this, it.string(), Toast.LENGTH_SHORT).show()
-            }
-
-
-        DrugService.getInstance().getDrugList("1234", "123").observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                if (it != null && it.drugList != null && it.drugList.size != 0) {
-                    Log.i(TAG, it.drugList.size.toString())
-                } else {
-                    Log.i(TAG, "drug list is null")
-                }
-
-            }
+//        SignService.getInstance().signUp("123", "123").observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                Toast.makeText(this, it.string(), Toast.LENGTH_SHORT).show()
+//            }
+//
+//
+//        DrugService.getInstance().getDrugList("1234", "123").observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                if (it != null && it.drugList != null && it.drugList.size != 0) {
+//                    Log.i(TAG, it.drugList.size.toString())
+//                } else {
+//                    Log.i(TAG, "drug list is null")
+//                }
+//
+//            }
 
 
     }
