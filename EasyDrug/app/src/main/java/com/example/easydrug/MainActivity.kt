@@ -42,16 +42,24 @@ class MainActivity : AppCompatActivity() {
 //            }
 //
 //
-//        DrugService.getInstance().getDrugList("1234", "123").observeOn(AndroidSchedulers.mainThread())
-//            .subscribe {
-//                if (it != null && it.drugList != null && it.drugList.size != 0) {
-//                    Log.i(TAG, it.drugList.size.toString())
-//                } else {
-//                    Log.i(TAG, "drug list is null")
-//                }
-//
-//            }
+        DrugService.getInstance().getDrugList("1234", "123").observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                if (it != null && it.drugList != null && it.drugList.size != 0) {
+                    Log.i(TAG, it.drugList.size.toString())
+                } else {
+                    Log.i(TAG, "drug list is null")
+                }
+            }
 
+        DrugService.getInstance().addDrug("1234", "xxxx", "abc.com", "001").observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                Log.i(TAG, it.string())
+            }
+
+        DrugService.getInstance().removeDrug("1234", "001").observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                Log.i(TAG, it.string())
+            }
 
     }
 

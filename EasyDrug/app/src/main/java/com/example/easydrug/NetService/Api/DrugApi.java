@@ -3,6 +3,8 @@ package com.example.easydrug.NetService.Api;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import model.DrugCode;
+import model.DrugInfo;
 import model.DrugList;
 import model.User;
 import okhttp3.ResponseBody;
@@ -23,12 +25,12 @@ public interface DrugApi {
     //add drug
     @POST("/addDrug")
     Observable<ResponseBody> addDrug(
-            @Body User params
+            @Body DrugInfo params
     );
 
     //remove drug
     @POST("/removeDrug")
     Observable<ResponseBody> removeDrug(
-            @Body User params
+            @Body DrugCode params
     );
 }
