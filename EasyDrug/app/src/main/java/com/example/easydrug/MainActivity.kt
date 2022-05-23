@@ -20,11 +20,13 @@ class MainActivity : AppCompatActivity() {
 
     private val TAG = "MainActivity"
     private var startScan: TextView? = null
+    private var inputFood: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         startScan = findViewById<TextView>(R.id.start_scan)
+        inputFood = findViewById<TextView>(R.id.input_food)
 
         startScan?.setOnClickListener {
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -36,30 +38,34 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        inputFood?.setOnClickListener {
+            startActivity(Intent(this, SpeechFoodActivity::class.java))
+        }
+
 //        SignService.getInstance().signUp("123", "123").observeOn(AndroidSchedulers.mainThread())
 //            .subscribe {
 //                Toast.makeText(this, it.string(), Toast.LENGTH_SHORT).show()
 //            }
 //
 //
-        DrugService.getInstance().getDrugList("1234", "123").observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                if (it != null && it.drugList != null && it.drugList.size != 0) {
-                    Log.i(TAG, it.drugList.size.toString())
-                } else {
-                    Log.i(TAG, "drug list is null")
-                }
-            }
-
-        DrugService.getInstance().addDrug("1234", "xxxx", "abc.com", "001").observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                Log.i(TAG, it.string())
-            }
-
-        DrugService.getInstance().removeDrug("1234", "001").observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                Log.i(TAG, it.string())
-            }
+//        DrugService.getInstance().getDrugList("1234", "123").observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                if (it != null && it.drugList != null && it.drugList.size != 0) {
+//                    Log.i(TAG, it.drugList.size.toString())
+//                } else {
+//                    Log.i(TAG, "drug list is null")
+//                }
+//            }
+//
+//        DrugService.getInstance().addDrug("1234", "xxxx", "abc.com", "001").observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                Log.i(TAG, it.string())
+//            }
+//
+//        DrugService.getInstance().removeDrug("1234", "001").observeOn(AndroidSchedulers.mainThread())
+//            .subscribe {
+//                Log.i(TAG, it.string())
+//            }
 
     }
 

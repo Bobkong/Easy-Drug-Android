@@ -31,6 +31,7 @@
         </activity>
 
         <activity android:name=".ScanDrugActivity"/>
+        <activity android:name=".SpeechFoodActivity" />
     </application>
 
 </manifest>
