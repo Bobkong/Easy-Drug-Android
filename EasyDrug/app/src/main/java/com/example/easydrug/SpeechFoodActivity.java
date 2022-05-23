@@ -41,10 +41,20 @@ public class SpeechFoodActivity extends AppCompatActivity {
             reco.recognized.addEventListener((o, speechRecognitionResultEventArgs) -> {
                 final String s = speechRecognitionResultEventArgs.getResult().getText();
                 Log.i(TAG, "Final result received: " + s);
+                recordingResult.append(",");
                 recordingResult.append(s);
+                // if record has been stopped
                 if (!isRecording) {
-                    // if record has been stopped
-                    SpeechFoodActivity.this.runOnUiThread(() -> speechResult.setText(recordingResult.toString()));
+                    // use comma to split recording result.
+                    String[] ingredients = recordingResult.toString().split(",");
+                    StringBuilder showText = new StringBuilder();
+                    for (String ingredient : ingredients) {
+                        // remove unuseful character
+                        ingredient = ingredient.replace(".", "");
+                        showText.append(ingredient).append("\n");
+                        Log.i(TAG, ingredient);
+                    }
+                    SpeechFoodActivity.this.runOnUiThread(() -> speechResult.setText(showText.toString()));
                 }
             });
         } catch (Exception ex) {
@@ -61,6 +71,7 @@ public class SpeechFoodActivity extends AppCompatActivity {
             Log.i(TAG, "Continuous recognition stopped.");
             button.setText("Start Recording");
         } else {
+            recordingResult = new StringBuilder();
             isRecording = true;
             reco.startContinuousRecognitionAsync();
             button.setText("Stop Recording");
