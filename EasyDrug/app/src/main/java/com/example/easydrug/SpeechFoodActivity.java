@@ -6,6 +6,7 @@ import static android.Manifest.permission.RECORD_AUDIO;
 import static com.example.easydrug.Configs.serviceRegion;
 import static com.example.easydrug.Configs.speechSubscriptionKey;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,7 @@ import androidx.core.app.ActivityCompat;
 import com.microsoft.cognitiveservices.speech.SpeechConfig;
 import com.microsoft.cognitiveservices.speech.SpeechRecognizer;
 
-public class SpeechFoodActivity extends AppCompatActivity {
+public class SpeechFoodActivity extends Activity {
 
     private static String TAG = "SpeechFoodActivity";
     SpeechConfig config;

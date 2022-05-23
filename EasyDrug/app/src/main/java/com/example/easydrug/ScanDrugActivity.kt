@@ -1,5 +1,6 @@
 package com.example.easydrug
 
+import android.app.Activity
 import android.os.Bundle
 import android.os.Vibrator
 import android.widget.Toast
@@ -9,7 +10,7 @@ import cn.bingoogolapple.qrcode.zbar.ZBarView
 import com.example.easydrug.NetService.Api.DrugLookUpService
 import io.reactivex.android.schedulers.AndroidSchedulers
 
-class ScanDrugActivity: AppCompatActivity(), QRCodeView.Delegate {
+class ScanDrugActivity: Activity(), QRCodeView.Delegate {
 
     private val TAG = "ScanDrugActivity"
     private var mZBarView: ZBarView? = null

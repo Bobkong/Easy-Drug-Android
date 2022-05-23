@@ -1,11 +1,13 @@
 package com.example.easydrug
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -13,37 +15,29 @@ import androidx.core.app.ActivityCompat
 import com.microsoft.cognitiveservices.speech.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : Activity() {
 
     private val TAG = "MainActivity"
-    private var startScan: TextView? = null
-    private var inputFood: TextView? = null
-    private var textToSpeech: TextView? = null
+    private var userAvatar: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        startScan = findViewById<TextView>(R.id.start_scan)
-        inputFood = findViewById<TextView>(R.id.input_food)
-        textToSpeech = findViewById<TextView>(R.id.text_to_speech)
+        userAvatar = findViewById(R.id.user_avatar)
 
-        startScan?.setOnClickListener {
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),1);
-            } else {
-                startActivity(Intent(this, ScanDrugActivity::class.java))
-            }
-
-        }
-
-        inputFood?.setOnClickListener {
-            startActivity(Intent(this, SpeechFoodActivity::class.java))
-        }
-
-        textToSpeech?.setOnClickListener {
-            startActivity(Intent(this, TextToSpeechActivity::class.java))
-        }
+//        startScan?.setOnClickListener {
+//            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+//                != PackageManager.PERMISSION_GRANTED){
+//                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),1);
+//            } else {
+//                startActivity(Intent(this, ScanDrugActivity::class.java))
+//            }
+//
+//        }
+//
+//        inputFood?.setOnClickListener {
+//            startActivity(Intent(this, SpeechFoodActivity::class.java))
+//        }
 
 //        SignService.getInstance().signUp("123", "123").observeOn(AndroidSchedulers.mainThread())
 //            .subscribe {
@@ -69,7 +63,6 @@ class MainActivity : AppCompatActivity() {
 //            .subscribe {
 //                Log.i(TAG, it.string())
 //            }
-
 
     }
 

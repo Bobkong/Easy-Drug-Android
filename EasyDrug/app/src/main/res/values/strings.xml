@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EasyDrug</string>
+    <string name="home_learn_title">Do you know milk can\'t be taken with antibiotics?</string>
+    <string name="tap_here_to_edit_info">Tap here to edit info</string>
 </resources>
