@@ -6,14 +6,11 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.example.easydrug.NetService.Api.DrugService
-import com.example.easydrug.NetService.Api.SignService
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.microsoft.cognitiveservices.speech.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -21,12 +18,14 @@ class MainActivity : AppCompatActivity() {
     private val TAG = "MainActivity"
     private var startScan: TextView? = null
     private var inputFood: TextView? = null
+    private var textToSpeech: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         startScan = findViewById<TextView>(R.id.start_scan)
         inputFood = findViewById<TextView>(R.id.input_food)
+        textToSpeech = findViewById<TextView>(R.id.text_to_speech)
 
         startScan?.setOnClickListener {
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -40,6 +39,10 @@ class MainActivity : AppCompatActivity() {
 
         inputFood?.setOnClickListener {
             startActivity(Intent(this, SpeechFoodActivity::class.java))
+        }
+
+        textToSpeech?.setOnClickListener {
+            startActivity(Intent(this, TextToSpeechActivity::class.java))
         }
 
 //        SignService.getInstance().signUp("123", "123").observeOn(AndroidSchedulers.mainThread())
@@ -66,6 +69,7 @@ class MainActivity : AppCompatActivity() {
 //            .subscribe {
 //                Log.i(TAG, it.string())
 //            }
+
 
     }
 
