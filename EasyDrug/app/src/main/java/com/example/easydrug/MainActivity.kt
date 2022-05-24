@@ -38,20 +38,15 @@ class MainActivity : Activity() {
         drugListCl = findViewById(R.id.drug_list)
         setFeatureWidth(drugListCl)
 
+        scanCl?.setOnClickListener {
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),1);
+            } else {
+                startActivity(Intent(this, ScanDrugActivity::class.java))
+            }
 
-
-
-
-
-//        startScan?.setOnClickListener {
-//            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-//                != PackageManager.PERMISSION_GRANTED){
-//                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),1);
-//            } else {
-//                startActivity(Intent(this, ScanDrugActivity::class.java))
-//            }
-//
-//        }
+        }
 //
 //        inputFood?.setOnClickListener {
 //            startActivity(Intent(this, SpeechFoodActivity::class.java))
