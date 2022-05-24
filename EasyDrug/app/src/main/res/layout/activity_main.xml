@@ -13,7 +13,7 @@
         android:paddingRight="24dp"
         android:paddingTop="40dp"
         android:paddingBottom="40dp"
-        tools:context=".MainActivity">
+        tools:context=".activity.MainActivity">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/user_cl"
@@ -23,7 +23,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent">
 
-            <com.example.easydrug.Widget.RoundRectImageView
+            <com.example.easydrug.widget.RoundRectImageView
                 android:id="@+id/user_avatar"
                 app:radius="28dp"
                 android:layout_width="56dp"

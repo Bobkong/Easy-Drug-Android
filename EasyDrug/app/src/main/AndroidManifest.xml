@@ -21,7 +21,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.EasyDrug">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.MainActivity"
             android:exported="true"
 
             android:theme="@style/NoActionBar">
@@ -32,9 +32,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ScanDrugActivity"/>
-        <activity android:name=".SpeechFoodActivity" />
-        <activity android:name=".TextToSpeechActivity" />
+        <activity android:name=".activity.ScanDrugActivity"/>
+        <activity android:name=".activity.SpeechFoodActivity" />
+        <activity android:name=".activity.TextToSpeechActivity" />
     </application>
 
 </manifest>
