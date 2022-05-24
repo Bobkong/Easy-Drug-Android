@@ -7,10 +7,10 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
+import android.view.View
 import android.widget.ImageView
-import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import com.microsoft.cognitiveservices.speech.*
 
@@ -19,11 +19,29 @@ class MainActivity : Activity() {
 
     private val TAG = "MainActivity"
     private var userAvatar: ImageView? = null
+    private var scanCl: ConstraintLayout? = null
+    private var foodCl: ConstraintLayout? = null
+    private var exploreCl: ConstraintLayout? = null
+    private var drugListCl: ConstraintLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         userAvatar = findViewById(R.id.user_avatar)
+
+        scanCl = findViewById(R.id.scan_drug)
+        setFeatureWidth(scanCl)
+        foodCl = findViewById(R.id.check_food)
+        setFeatureWidth(foodCl)
+        exploreCl = findViewById(R.id.explore)
+        setFeatureWidth(exploreCl)
+        drugListCl = findViewById(R.id.drug_list)
+        setFeatureWidth(drugListCl)
+
+
+
+
+
 
 //        startScan?.setOnClickListener {
 //            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
@@ -94,5 +112,12 @@ class MainActivity : Activity() {
                 startActivity(Intent(this, ScanDrugActivity::class.java))
             }
         }
+    }
+
+    private fun setFeatureWidth(view: View?) {
+        val width = (UIUtils.getWidth(this) - UIUtils.dp2px(this, 64F)) / 2
+        val params = view?.layoutParams
+        params?.width = width
+        view?.layoutParams = params
     }
 }
