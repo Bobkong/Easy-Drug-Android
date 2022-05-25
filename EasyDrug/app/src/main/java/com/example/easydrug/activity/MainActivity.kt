@@ -24,6 +24,7 @@ class MainActivity : Activity() {
     private var foodCl: ConstraintLayout? = null
     private var exploreCl: ConstraintLayout? = null
     private var drugListCl: ConstraintLayout? = null
+    private var learnCl:ConstraintLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,11 @@ class MainActivity : Activity() {
         setFeatureWidth(exploreCl)
         drugListCl = findViewById(R.id.drug_list)
         setFeatureWidth(drugListCl)
+        learnCl = findViewById(R.id.learn_cl)
+
+        learnCl?.setOnClickListener {
+            startActivity(Intent(this, OnboardingActivity::class.java))
+        }
 
         scanCl?.setOnClickListener {
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
