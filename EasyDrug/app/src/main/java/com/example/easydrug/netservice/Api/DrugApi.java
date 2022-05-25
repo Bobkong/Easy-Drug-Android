@@ -2,6 +2,8 @@ package com.example.easydrug.netservice.Api;
 
 import io.reactivex.Observable;
 import com.example.easydrug.model.DrugCode;
+import com.example.easydrug.model.DrugDetail;
+import com.example.easydrug.model.DrugDetailRequestParam;
 import com.example.easydrug.model.DrugInfo;
 import com.example.easydrug.model.DrugList;
 import com.example.easydrug.model.User;
@@ -27,5 +29,11 @@ public interface DrugApi {
     @POST("/removeDrug")
     Observable<ResponseBody> removeDrug(
             @Body DrugCode params
+    );
+
+    //drug detail
+    @POST("/getDrugDetail")
+    Observable<DrugDetail> getDrugDetail(
+            @Body DrugDetailRequestParam params
     );
 }

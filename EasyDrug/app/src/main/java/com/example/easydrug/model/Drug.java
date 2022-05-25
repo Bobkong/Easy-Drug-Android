@@ -11,6 +11,15 @@ public class Drug implements Serializable {
     private String drugName;
     @SerializedName("upc_code")
     private String upcCode;
+    @SerializedName("drug_desc")
+    private String drugDesc;
+
+    public Drug(String drugImageUrl, String drugName, String upcCode, String drugDesc) {
+        this.drugImageUrl = drugImageUrl;
+        this.drugName = drugName;
+        this.upcCode = upcCode;
+        this.drugDesc = drugDesc;
+    }
 
     public String getDrugImageUrl() {
         return drugImageUrl;
@@ -34,5 +43,13 @@ public class Drug implements Serializable {
 
     public void setUpcCode(String upcCode) {
         this.upcCode = upcCode;
+    }
+
+    public String getDrugDesc() {
+        return drugDesc;
+    }
+
+    public void setDrugDesc(String drugDesc) {
+        this.drugDesc = drugDesc;
     }
 }

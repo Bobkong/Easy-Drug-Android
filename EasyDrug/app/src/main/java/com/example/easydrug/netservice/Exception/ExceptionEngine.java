@@ -47,7 +47,7 @@ public class ExceptionEngine {
                 case BAD_GATEWAY:
                 case SERVICE_UNAVAILABLE:
                 default:
-                    exception.setDisplayMessage("网络错误");
+                    exception.setDisplayMessage("Network Error");
                     break;
             }
             return exception;
@@ -55,15 +55,15 @@ public class ExceptionEngine {
                 ||throwable instanceof JSONException
                 ||throwable instanceof ParseException){
             exception=new ApiException(throwable,PARSE_ERROR);
-            exception.setDisplayMessage("解析错误");
+            exception.setDisplayMessage("Parse Error");
             return exception;
         }else if(throwable instanceof ConnectException){
             exception=new ApiException(throwable,NETWORD_ERROR);
-            exception.setDisplayMessage("连接失败");
+            exception.setDisplayMessage("Connection Failed");
             return exception;
         }else{
             exception=new ApiException(throwable,UNKNOWN);
-            exception.setDisplayMessage("未知错误");
+            exception.setDisplayMessage("Unknown Error");
             return exception;
         }
     }
