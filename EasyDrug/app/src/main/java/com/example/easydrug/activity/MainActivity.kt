@@ -13,7 +13,7 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import com.example.easydrug.R
-import com.example.easydrug.UIUtils
+import com.example.easydrug.Utils.UIUtils
 
 
 class MainActivity : Activity() {
@@ -102,17 +102,16 @@ class MainActivity : Activity() {
                         Manifest.permission.CAMERA
                     )
                 ) {
-                    Toast.makeText(this, "被永遠拒絕，只能使用者手動給予權限", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Permission Request is Rejected!", Toast.LENGTH_LONG).show()
 
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri: Uri = Uri.fromParts("package", packageName, null)
                     intent.data = uri
                     startActivity(intent)
                 } else {
-                    Toast.makeText(this, "按下拒絕", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Permission Request is Rejected!", Toast.LENGTH_LONG).show()
                 }
             } else {
-                Toast.makeText(this, "允許權限", Toast.LENGTH_LONG).show()
                 startActivity(Intent(this, ScanDrugActivity::class.java))
             }
         }

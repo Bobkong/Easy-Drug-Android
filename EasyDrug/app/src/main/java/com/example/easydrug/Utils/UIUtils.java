@@ -1,4 +1,4 @@
-package com.example.easydrug;
+package com.example.easydrug.Utils;
 
 import android.content.Context;
 import android.view.WindowManager;

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 
 import com.example.easydrug.R;
-import com.example.easydrug.UIUtils;
+import com.example.easydrug.Utils.UIUtils;
 import com.example.easydrug.widget.ExpandTextView;
 
 public class DrugDetailActivity extends Activity {
