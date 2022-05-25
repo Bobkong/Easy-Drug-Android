@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
 import com.example.easydrug.R
 import com.example.easydrug.Utils.UIUtils
+import com.githang.statusbar.StatusBarCompat
 
 
 class MainActivity : Activity() {
@@ -29,8 +30,8 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        StatusBarCompat.setStatusBarColor(this, this.resources.getColor(R.color.bg_color))
         userAvatar = findViewById(R.id.user_avatar)
-
         scanCl = findViewById(R.id.scan_drug)
         setFeatureWidth(scanCl)
         foodCl = findViewById(R.id.check_food)

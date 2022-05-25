@@ -1,6 +1,7 @@
 package com.example.easydrug.widget;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
@@ -27,6 +28,7 @@ public class ButtonSpan extends ClickableSpan {
     @Override
     public void updateDrawState(TextPaint ds) {
         ds.setColor(context.getResources().getColor(colorId));
+        ds.setTypeface(Typeface.DEFAULT_BOLD);
         ds.setUnderlineText(false);
     }
 

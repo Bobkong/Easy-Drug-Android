@@ -18,6 +18,7 @@ import cn.bingoogolapple.qrcode.zbar.ZBarView
 import com.example.easydrug.R
 import com.example.easydrug.Utils.FileUtil
 import com.example.easydrug.netservice.Api.DrugLookUpService
+import com.githang.statusbar.StatusBarCompat
 import io.reactivex.android.schedulers.AndroidSchedulers
 
 class ScanDrugActivity: Activity(), QRCodeView.Delegate {
@@ -32,6 +33,7 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_drug)
+        StatusBarCompat.setStatusBarColor(this, this.resources.getColor(R.color.bg_color))
 
         mHintLl= findViewById(R.id.hint_ll)
         mSuccessImage = findViewById(R.id.successfully_scan)
@@ -114,6 +116,7 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
                         // ensure scanning a drug
                         if (drug.items[0].category.startsWith("Health")) {
                             Toast.makeText(this, drug.items[0].title, Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this, DrugDetailActivity::class.java))
                         } else {
                             hideSuccessScan()
                             Toast.makeText(this, "Please scan a drug", Toast.LENGTH_SHORT).show()

@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import com.example.easydrug.R;
 import com.example.easydrug.Utils.UIUtils;
 import com.example.easydrug.widget.ExpandTextView;
+import com.githang.statusbar.StatusBarCompat;
 
 public class DrugDetailActivity extends Activity {
 
@@ -17,6 +18,7 @@ public class DrugDetailActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drug_detail);
+        StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
         drugDescription = findViewById(R.id.description_content);
         int width = UIUtils.getWidth(this) - UIUtils.dp2px(this, 72);
         drugDescription.initWidth(width);
