@@ -40,7 +40,7 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_drug)
-        StatusBarCompat.setStatusBarColor(this, this.resources.getColor(R.color.bg_color))
+        StatusBarCompat.setStatusBarColor(this, this.resources.getColor(R.color.black))
 
         mHintLl= findViewById(R.id.hint_ll)
         mSuccessImage = findViewById(R.id.successfully_scan)

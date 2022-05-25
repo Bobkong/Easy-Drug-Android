@@ -7,6 +7,12 @@ import java.util.ArrayList;
 
 public class DrugList implements Serializable {
 
+    @SerializedName("code")
+    int code;
+
+    @SerializedName("msg")
+    String msg;
+
     @SerializedName("druglist")
     private ArrayList<Drug> drugList;
 
