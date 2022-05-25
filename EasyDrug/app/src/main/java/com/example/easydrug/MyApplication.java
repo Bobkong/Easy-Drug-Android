@@ -1,7 +1,10 @@
 package com.example.easydrug;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.os.Build;
+import android.view.WindowManager;
 
 public class MyApplication extends Application {
     private static Context context;

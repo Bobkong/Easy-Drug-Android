@@ -10,4 +10,5 @@
     <color name="grey">#555555</color>
     <color name="bg_color">#EFF2FC</color>
     <color name="theme_color">#2949CD</color>
+    <color name="transparent">#00000000</color>
 </resources>

@@ -9,9 +9,9 @@
         <attr name="radius" format="dimension"/>
     </declare-styleable>
 
-
-    <style name = "AppTheme" parent = "android:Theme.Holo.Light.DarkActionBar">
+    <style name = "AppTheme" parent = "Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/bg_color</item>
     </style>
 
     <style name = "NoActionBar" parent = "@style/AppTheme">

@@ -10,16 +10,31 @@
         android:id="@+id/zbarview"
         style="@style/MatchMatch"
         app:qrcv_animTime="1000"
-        app:qrcv_borderColor="@android:color/white"
+        app:qrcv_borderColor="@android:color/transparent"
         app:qrcv_borderSize="1dp"
-        app:qrcv_cornerColor="#ff0000"
-        app:qrcv_cornerLength="20dp"
-        app:qrcv_cornerSize="3dp"
+        app:qrcv_cornerColor="@color/white"
+        app:qrcv_cornerLength="60dp"
+        app:qrcv_cornerSize="6dp"
         app:qrcv_isShowDefaultScanLineDrawable="true"
-        app:qrcv_maskColor="#33FFFFFF"
+        app:qrcv_maskColor="@color/transparent"
         app:qrcv_rectWidth="200dp"
-        app:qrcv_scanLineColor="#00ff00"
-        app:qrcv_topOffset="90dp"
+        app:qrcv_scanLineColor="@color/theme_color"
+        app:qrcv_topOffset="200dp"
         tools:ignore="MissingConstraints" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="Place barcode at the center of the screen"/>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

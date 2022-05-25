@@ -52,6 +52,10 @@ class MainActivity : Activity() {
         foodCl?.setOnClickListener {
             startActivity(Intent(this, SpeechFoodActivity::class.java))
         }
+
+        drugListCl?.setOnClickListener {
+            startActivity(Intent(this, DrugDetailActivity::class.java))
+        }
 //
 //        inputFood?.setOnClickListener {
 //            startActivity(Intent(this, SpeechFoodActivity::class.java))
