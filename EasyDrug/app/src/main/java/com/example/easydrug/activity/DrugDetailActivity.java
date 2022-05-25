@@ -2,6 +2,7 @@ package com.example.easydrug.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
@@ -14,6 +15,7 @@ public class DrugDetailActivity extends Activity {
 
     private String testText = "Tylenol is an over-the-counter (OTC) medicine used to treat reduce symptoms of pain and as a fever reducer. Tylenol may be used alone or with other medications. Tylenol belongs to a class of drugs called...View MoreTylenol is an over-the-counter (OTC) medicine used to treat reduce symptoms of pain and as a fever reducer. Tylenol may be used alone or with other medications. Tylenol belongs to a class of drugs called...View More";
     private ExpandTextView drugDescription;
+    private ImageView back;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,5 +26,10 @@ public class DrugDetailActivity extends Activity {
         drugDescription.initWidth(width);
         drugDescription.setMaxLines(7);
         drugDescription.setCloseText(testText);
+
+        back = findViewById(R.id.back);
+        back.setOnClickListener(v -> {
+            finish();
+        });
     }
 }

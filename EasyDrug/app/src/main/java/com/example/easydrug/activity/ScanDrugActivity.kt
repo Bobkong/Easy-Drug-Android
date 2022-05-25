@@ -117,6 +117,7 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
                         if (drug.items[0].category.startsWith("Health")) {
                             Toast.makeText(this, drug.items[0].title, Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this, DrugDetailActivity::class.java))
+                            finish()
                         } else {
                             hideSuccessScan()
                             Toast.makeText(this, "Please scan a drug", Toast.LENGTH_SHORT).show()
