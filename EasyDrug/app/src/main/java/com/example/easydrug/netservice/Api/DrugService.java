@@ -2,6 +2,7 @@ package com.example.easydrug.netservice.Api;
 
 import com.example.easydrug.model.DrugDetail;
 import com.example.easydrug.model.DrugDetailRequestParam;
+import com.example.easydrug.model.GeneralResponse;
 import com.example.easydrug.netservice.HttpResultFunc;
 import com.example.easydrug.netservice.EasyDrugServiceManager;
 
@@ -29,12 +30,12 @@ public class DrugService {
                 .subscribeOn(Schedulers.io());
     }
 
-    public Observable<ResponseBody> addDrug(String username, String drugName, String drugImageUrl, String drugUpcCode, String drugDesc){
+    public Observable<GeneralResponse> addDrug(String username, String drugName, String drugImageUrl, String drugUpcCode, String drugDesc){
         return drugApi.addDrug(new DrugInfo(username, drugName, drugImageUrl, drugUpcCode, drugDesc))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
-    public Observable<ResponseBody> removeDrug(String username, String drugUpcCode){
+    public Observable<GeneralResponse> removeDrug(String username, String drugUpcCode){
         return drugApi.removeDrug(new DrugCode(username, drugUpcCode))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());

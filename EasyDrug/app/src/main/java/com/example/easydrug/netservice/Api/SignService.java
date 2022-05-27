@@ -1,6 +1,7 @@
 package com.example.easydrug.netservice.Api;
 
 
+import com.example.easydrug.model.GeneralResponse;
 import com.example.easydrug.netservice.HttpResultFunc;
 import com.example.easydrug.netservice.EasyDrugServiceManager;
 
@@ -19,13 +20,13 @@ public class SignService {
 
     private final SignApi signApi= EasyDrugServiceManager.getInstance().create(SignApi.class);
 
-    public Observable<ResponseBody> signUp(String username, String password){
+    public Observable<GeneralResponse> signUp(String username, String password){
         return signApi.signUp(new User(username, password))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
-    public Observable<ResponseBody> signIn(String username, String password){
+    public Observable<GeneralResponse> signIn(String username, String password){
         return signApi.signIn(new User(username, password))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
