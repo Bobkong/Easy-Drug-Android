@@ -57,4 +57,5 @@ dependencies {
     implementation 'com.ms-square:expandableTextView:0.1.4'
     // recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'com.githang:status-bar-compat:0.7'
 }

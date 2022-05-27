@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Vibrator
 import android.provider.Settings
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -15,10 +16,17 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import cn.bingoogolapple.qrcode.core.QRCodeView
 import cn.bingoogolapple.qrcode.zbar.ZBarView
+import com.example.easydrug.Configs
 import com.example.easydrug.R
 import com.example.easydrug.Utils.FileUtil
+import com.example.easydrug.model.DrugDetail
+import com.example.easydrug.model.DrugLookUpInfo
 import com.example.easydrug.netservice.Api.DrugLookUpService
+import com.example.easydrug.netservice.Api.DrugService
+import com.githang.statusbar.StatusBarCompat
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 
 class ScanDrugActivity: Activity(), QRCodeView.Delegate {
 
@@ -32,6 +40,7 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_scan_drug)
+        StatusBarCompat.setStatusBarColor(this, this.resources.getColor(R.color.black))
 
         mHintLl= findViewById(R.id.hint_ll)
         mSuccessImage = findViewById(R.id.successfully_scan)
@@ -106,14 +115,13 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
             Toast.makeText(this, "Please make sure the barcode is big enough and in the center of the picture.", Toast.LENGTH_SHORT).show();
         }
         result?.let {
-
-
             DrugLookUpService.getInstance().drugLookUp(it).observeOn(AndroidSchedulers.mainThread())
                 .subscribe { drug ->
                     if (drug.items != null && drug.items.size != 0) {
                         // ensure scanning a drug
                         if (drug.items[0].category.startsWith("Health")) {
-                            Toast.makeText(this, drug.items[0].title, Toast.LENGTH_SHORT).show()
+                            // add drug to server
+                            requestDrugDetail(drug, it)
                         } else {
                             hideSuccessScan()
                             Toast.makeText(this, "Please scan a drug", Toast.LENGTH_SHORT).show()
@@ -122,6 +130,40 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
                     }
                 }
         }
+    }
+
+    private fun requestDrugDetail(drug: DrugLookUpInfo, upc: String) {
+        DrugService.getInstance().getDrugDetail(FileUtil.getSPString(this, Configs.userNameKey), drug.items[0].title, drug.items[0].description)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object: Observer<DrugDetail> {
+                override fun onNext(value: DrugDetail?) {
+                    Log.i(TAG, value.toString())
+                    value?.toString()?.let { response ->
+                        if (response == "Success!") {
+                            // todo jump to drug detail screen
+                            finish()
+                        } else {
+                            Toast.makeText(this@ScanDrugActivity, response, Toast.LENGTH_SHORT).show()
+                            hideSuccessScan()
+                        }
+                    }
+                }
+
+                override fun onError(e: Throwable?) {
+                    Log.e(TAG, e.toString())
+                    Toast.makeText(this@ScanDrugActivity, e?.message, Toast.LENGTH_SHORT).show()
+                    hideSuccessScan()
+                }
+
+                override fun onSubscribe(d: Disposable?) {
+                    Log.e(TAG, d.toString())
+                }
+
+                override fun onComplete() {
+                    Log.e(TAG, "onComplete")
+                }
+
+            })
     }
 
     override fun onCameraAmbientBrightnessChanged(isDark: Boolean) {

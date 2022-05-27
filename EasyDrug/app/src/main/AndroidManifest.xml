@@ -21,11 +21,10 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.EasyDrug">
-        <activity
-            android:name=".activity.MainActivity"
-            android:exported="true"
 
-            android:theme="@style/NoActionBar">
+        <activity android:name=".activity.SplashActivity"
+            android:theme="@style/SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -33,6 +32,9 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".activity.MainActivity"
+            android:theme="@style/NoActionBar"/>
         <activity android:name=".activity.ScanDrugActivity"
             android:theme="@style/NoActionBar"/>
         <activity android:name=".activity.SpeechFoodActivity" />
@@ -45,6 +47,8 @@
         <activity android:name=".activity.OnBoardingScanDrugActivity" />
         <activity android:name=".activity.CheckListActivity" />
         <activity android:name=".activity.SplashActivity" />
+
+
 
 
     </application>

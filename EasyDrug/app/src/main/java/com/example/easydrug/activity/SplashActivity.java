@@ -1,29 +1,25 @@
 package com.example.easydrug.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
 
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.easydrug.R;
+public class SplashActivity extends AppCompatActivity {
 
-public class SplashActivity extends Activity {
-
-    private ConstraintLayout splash;
-
+    private static String TAG = "SplashActivity";
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_onboardingscandrug);
-        splash = findViewById(R.id.letsgo_scandrug);
-        splash.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
-            }
-        });
+
+        new Handler().postDelayed(() -> {
+            // todo Carson
+            // determine go to MainActivity or OnboardingActivity
+
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            finish();
+        }, 300);
     }
 }

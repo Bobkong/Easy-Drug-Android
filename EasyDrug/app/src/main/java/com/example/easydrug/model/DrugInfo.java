@@ -13,12 +13,15 @@ public class DrugInfo implements Serializable {
     private String drugImageUrl;
     @SerializedName("drug_upc_code")
     private String drugUpcCode;
+    @SerializedName("drug_desc")
+    private String drugDesc;
 
-    public DrugInfo(String userName, String drugName, String drugImageUrl, String drugUpcCode) {
+    public DrugInfo(String userName, String drugName, String drugImageUrl, String drugUpcCode, String drugDesc) {
         this.userName = userName;
         this.drugName = drugName;
         this.drugImageUrl = drugImageUrl;
         this.drugUpcCode = drugUpcCode;
+        this.drugDesc = drugDesc;
     }
 
     public String getUserName() {
@@ -51,5 +54,13 @@ public class DrugInfo implements Serializable {
 
     public void setDrugUpcCode(String drugUpcCode) {
         this.drugUpcCode = drugUpcCode;
+    }
+
+    public String getDrugDesc() {
+        return drugDesc;
+    }
+
+    public void setDrugDesc(String drugDesc) {
+        this.drugDesc = drugDesc;
     }
 }
