@@ -45,4 +45,22 @@ public class FileUtil {
         editor.remove(key);
         editor.apply();
     }
+
+    public static void saveSPBool(Context context, String key, boolean value) {
+        SharedPreferences sharedPreferences= context.getSharedPreferences("EasyDrug", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(key, value);
+        editor.apply();
+    }
+
+    public static boolean getSPBool(Context context, String key) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("EasyDrug", Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(key, false);
+    }
+    public static void deleteSPBool(Context context, String key) {
+        SharedPreferences sharedPreferences= context.getSharedPreferences("EasyDrug", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(key);
+        editor.apply();
+    }
 }

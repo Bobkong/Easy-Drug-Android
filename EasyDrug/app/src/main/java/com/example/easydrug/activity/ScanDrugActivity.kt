@@ -39,6 +39,11 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var ifFromOnBoarding = intent.getBooleanExtra(Configs.ifFromOnBoarding, false)
+        Log.i(TAG, ifFromOnBoarding.toString())
+
+
+
         setContentView(R.layout.activity_scan_drug)
         StatusBarCompat.setStatusBarColor(this, this.resources.getColor(R.color.black))
 

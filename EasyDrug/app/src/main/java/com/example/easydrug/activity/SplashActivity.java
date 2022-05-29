@@ -7,6 +7,9 @@ import android.os.Handler;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.easydrug.Configs;
+import com.example.easydrug.Utils.FileUtil;
+
 public class SplashActivity extends AppCompatActivity {
 
     private static String TAG = "SplashActivity";
@@ -15,10 +18,16 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         new Handler().postDelayed(() -> {
-            // todo Carson
+            boolean ifSignedUp = FileUtil.getSPBool(SplashActivity.this, Configs.ifSignedUpKey);
             // determine go to MainActivity or OnboardingActivity
+            if (!ifSignedUp) {
+                startActivity(new Intent(SplashActivity.this, OnboardingActivity.class));
+            } else if (FileUtil.getSPString(SplashActivity.this, Configs.userNameKey) == null){
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+            }else {
+                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            }
 
-            startActivity(new Intent(SplashActivity.this, MainActivity.class));
             finish();
         }, 300);
     }

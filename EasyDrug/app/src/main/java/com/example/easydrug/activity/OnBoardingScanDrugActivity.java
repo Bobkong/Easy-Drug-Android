@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.easydrug.Configs;
 import com.example.easydrug.R;
 
 public class OnBoardingScanDrugActivity extends Activity{
@@ -21,7 +22,9 @@ public class OnBoardingScanDrugActivity extends Activity{
         letsGoScanDrug.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OnBoardingScanDrugActivity.this, CheckListActivity.class));
+                Intent intent = new Intent(OnBoardingScanDrugActivity.this, ScanDrugActivity.class);
+                intent.putExtra(Configs.ifFromOnBoarding, true);
+                startActivity(intent);
             }
         });
     }

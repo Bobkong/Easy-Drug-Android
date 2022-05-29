@@ -3,27 +3,73 @@ package com.example.easydrug.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.example.easydrug.Configs;
 import com.example.easydrug.R;
+import com.example.easydrug.Utils.FileUtil;
+import com.example.easydrug.model.GeneralResponse;
+import com.example.easydrug.netservice.Api.SignService;
+
+import java.io.File;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class LoginActivity extends Activity {
+    private String TAG = "LoginActivity";
     private ConstraintLayout logIn;
     private LinearLayout signUp;
-
+    EditText username, password;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        username = findViewById(R.id.editText1);
+        password = findViewById(R.id.editText2);
         logIn = findViewById(R.id.login_button);
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, OnBoardingScanDrugActivity.class));
+                SignService.getInstance().signIn(username.getText().toString(), password.getText().toString()).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<GeneralResponse>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
+
+                            }
+
+                            @Override
+                            public void onNext(GeneralResponse value) {
+                                if (value.getCode() == Configs.requestSuccess) {
+                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    // save to local db
+                                    FileUtil.saveSPString(LoginActivity.this, Configs.userNameKey, username.getText().toString());
+                                    FileUtil.saveSPString(LoginActivity.this, Configs.passwordKey, password.getText().toString());
+                                } else {
+                                    // toast
+                                    Toast.makeText(getApplicationContext(), value.getMsg(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                // fail
+                                Log.e(TAG, e.toString());
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
             }
         });
 

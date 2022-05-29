@@ -9,4 +9,12 @@ public interface Configs {
     // SharedPreference
     String userNameKey = "username";
     String passwordKey = "password";
+    String ifSignedUpKey = "ifSignedUpKey";
+
+    // network response
+    int requestSuccess = 0;
+    int requestFail = 1;
+
+    // intent extra
+    String ifFromOnBoarding = "ifFromOnBoarding";
 }

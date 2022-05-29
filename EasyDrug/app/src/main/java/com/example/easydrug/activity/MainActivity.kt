@@ -12,7 +12,9 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
+import com.example.easydrug.Configs
 import com.example.easydrug.R
+import com.example.easydrug.Utils.FileUtil
 import com.example.easydrug.Utils.UIUtils
 import com.githang.statusbar.StatusBarCompat
 
@@ -43,7 +45,9 @@ class MainActivity : Activity() {
         learnCl = findViewById(R.id.learn_cl)
 
         learnCl?.setOnClickListener {
-            startActivity(Intent(this, OnboardingActivity::class.java))
+            // test log out
+            FileUtil.deleteSPString(this@MainActivity, Configs.userNameKey)
+            FileUtil.deleteSPString(this@MainActivity, Configs.passwordKey)
         }
 
         scanCl?.setOnClickListener {
