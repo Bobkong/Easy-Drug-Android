@@ -12,14 +12,16 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat
+import androidx.fragment.app.FragmentActivity
 import com.example.easydrug.Configs
 import com.example.easydrug.R
 import com.example.easydrug.Utils.FileUtil
 import com.example.easydrug.Utils.UIUtils
+import com.example.easydrug.fragment.CustomBottomSheetDialogFragment
 import com.githang.statusbar.StatusBarCompat
 
 
-class MainActivity : Activity() {
+class MainActivity : FragmentActivity() {
 
     private val TAG = "MainActivity"
     private var userAvatar: ImageView? = null
@@ -51,7 +53,7 @@ class MainActivity : Activity() {
         }
 
         scanCl?.setOnClickListener {
-            startActivity(Intent(this, ScanDrugActivity::class.java))
+            CustomBottomSheetDialogFragment().show(supportFragmentManager, "Dialog")
         }
 
         foodCl?.setOnClickListener {
