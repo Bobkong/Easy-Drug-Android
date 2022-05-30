@@ -1,7 +1,6 @@
 package com.example.easydrug.activity
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -18,6 +17,7 @@ import com.example.easydrug.R
 import com.example.easydrug.Utils.FileUtil
 import com.example.easydrug.Utils.UIUtils
 import com.example.easydrug.fragment.CustomBottomSheetDialogFragment
+import com.example.easydrug.widget.TwoButtonDialog
 import com.githang.statusbar.StatusBarCompat
 
 
@@ -48,8 +48,22 @@ class MainActivity : FragmentActivity() {
 
         learnCl?.setOnClickListener {
             // test log out
-            FileUtil.deleteSPString(this@MainActivity, Configs.userNameKey)
-            FileUtil.deleteSPString(this@MainActivity, Configs.passwordKey)
+            TwoButtonDialog(this,
+                {
+                    FileUtil.deleteSPString(this@MainActivity, Configs.userNameKey)
+                    FileUtil.deleteSPString(this@MainActivity, Configs.passwordKey)
+                }) {
+                // do nothing
+            }.setTitle(getString(R.string.log_out_title))
+                .setStatusImgRes(R.drawable.dialog_warning)
+                .setRightButtonText("Log Out")
+                .setLeftButtonText("Cancel")
+                .setRightButtonBg(R.drawable.grey_color_stroke_bg_8dp)
+                .setLeftButtonBg(R.drawable.theme_color_bg_8dp)
+                .setLeftButtonTextColor(R.color.white)
+                .setRightButtonTextColor(R.color.grey)
+                .show()
+
         }
 
         scanCl?.setOnClickListener {

@@ -49,7 +49,10 @@ public class OneButtonDialog extends Dialog {
 
         mTitle.setText(titleString);
         mStatusImage.setImageResource(statusImgRes);
-        mConfirm.setOnClickListener(v -> mConfirmListener.onConfirm());
+        mConfirm.setOnClickListener(v -> {
+            mConfirmListener.onConfirm();
+            dismiss();
+        });
     }
 
     public OneButtonDialog setTitle(String title) {

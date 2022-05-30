@@ -10,4 +10,5 @@
     <string name="speech_food_check1_text">Stop for 0.5-1s between each ingredient</string>
     <string name="speech_food_check2_text">“E.g: Cheese, bacon, egg, red pepper, flour, tomato, basil”</string>
     <string name="speech_food_check2_title">Only say food ingredients</string>
+    <string name="log_out_title">Are you sure you want to Log Out of the app?</string>
 </resources>
