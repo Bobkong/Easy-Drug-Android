@@ -18,6 +18,7 @@ import com.example.easydrug.R;
 import com.example.easydrug.Utils.FileUtil;
 import com.example.easydrug.model.GeneralResponse;
 import com.example.easydrug.netservice.Api.SignService;
+import com.githang.statusbar.StatusBarCompat;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -34,6 +35,7 @@ public class SignUpActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
         username = (EditText) findViewById(R.id.editText1);
         password1 = (EditText) findViewById(R.id.editText2);
         password2 = (EditText) findViewById(R.id.editText3);

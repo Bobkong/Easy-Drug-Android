@@ -46,7 +46,7 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.OnBoardingScanDrugActivity" />
         <activity android:name=".activity.CheckListActivity" />
-
+        <activity android:name=".activity.SpeechFoodResultActivity"/>
 
 
 

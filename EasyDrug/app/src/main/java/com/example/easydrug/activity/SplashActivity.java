@@ -8,7 +8,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.easydrug.Configs;
+import com.example.easydrug.R;
 import com.example.easydrug.Utils.FileUtil;
+import com.githang.statusbar.StatusBarCompat;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -16,6 +18,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
 
         new Handler().postDelayed(() -> {
             boolean ifSignedUp = FileUtil.getSPBool(SplashActivity.this, Configs.ifSignedUpKey);

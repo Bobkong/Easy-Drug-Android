@@ -51,13 +51,7 @@ class MainActivity : Activity() {
         }
 
         scanCl?.setOnClickListener {
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED){
-                ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),1);
-            } else {
-                startActivity(Intent(this, ScanDrugActivity::class.java))
-            }
-
+            startActivity(Intent(this, ScanDrugActivity::class.java))
         }
 
         foodCl?.setOnClickListener {

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/drug_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Ibuprofen"
+        android:layout_marginRight="36dp" />
+
+    <ImageView
+        android:id="@+id/warning_sign"
+        android:layout_width="28dp"
+        android:layout_height="24dp"
+        android:src="@drawable/warning_sign"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/drug_name"
+        app:layout_constraintBottom_toBottomOf="@id/drug_name"/>
+
+    <TextView
+        android:id="@+id/interaction_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintTop_toBottomOf="@+id/drug_name"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:text="Formoterol may increase the OTc-prolonging activities of Ritonavir" />
+
+    <TextView
+        android:id="@+id/side_effect_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/interaction_description"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:text="@string/possibilities_string" />
+
+    <TextView
+        android:id="@+id/side_effect_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/side_effect_title"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"
+        android:text="Nausea(28.8%),Diarrhoea(17.0%), Vomiting(16.8%),               (15.9%), Dysgeusia(10.3%)" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

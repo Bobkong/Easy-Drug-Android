@@ -17,6 +17,7 @@ import com.example.easydrug.R;
 import com.example.easydrug.Utils.FileUtil;
 import com.example.easydrug.model.GeneralResponse;
 import com.example.easydrug.netservice.Api.SignService;
+import com.githang.statusbar.StatusBarCompat;
 
 import java.io.File;
 
@@ -33,6 +34,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
         username = findViewById(R.id.editText1);
         password = findViewById(R.id.editText2);
         logIn = findViewById(R.id.login_button);
@@ -53,6 +55,7 @@ public class LoginActivity extends Activity {
                                     // save to local db
                                     FileUtil.saveSPString(LoginActivity.this, Configs.userNameKey, username.getText().toString());
                                     FileUtil.saveSPString(LoginActivity.this, Configs.passwordKey, password.getText().toString());
+                                    FileUtil.saveSPBool(LoginActivity.this, Configs.ifSignedUpKey, true);
                                 } else {
                                     // toast
                                     Toast.makeText(getApplicationContext(), value.getMsg(), Toast.LENGTH_SHORT).show();

@@ -16,6 +16,27 @@ public class DrugDetailContent implements Serializable {
     @SerializedName("drug_interactions")
     ArrayList<DrugInteraction> drugInteractions;
 
-    @SerializedName("food_interactions")
-    ArrayList<FoodInteraction> foodInteractions;
+    public boolean isDrugListEmpty() {
+        return drugListEmpty;
+    }
+
+    public void setDrugListEmpty(boolean drugListEmpty) {
+        this.drugListEmpty = drugListEmpty;
+    }
+
+    public boolean isInList() {
+        return isInList;
+    }
+
+    public void setInList(boolean inList) {
+        isInList = inList;
+    }
+
+    public ArrayList<DrugInteraction> getDrugInteractions() {
+        return drugInteractions;
+    }
+
+    public void setDrugInteractions(ArrayList<DrugInteraction> drugInteractions) {
+        this.drugInteractions = drugInteractions;
+    }
 }

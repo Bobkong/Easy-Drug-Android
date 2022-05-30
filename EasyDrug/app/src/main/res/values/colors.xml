@@ -11,4 +11,5 @@
     <color name="bg_color">#EFF2FC</color>
     <color name="theme_color">#2949CD</color>
     <color name="transparent">#00000000</color>
+    <color name="orange">#FFE8C6</color>
 </resources>

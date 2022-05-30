@@ -47,6 +47,11 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
         setContentView(R.layout.activity_scan_drug)
         StatusBarCompat.setStatusBarColor(this, this.resources.getColor(R.color.black))
 
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),1);
+        }
+
         mHintLl= findViewById(R.id.hint_ll)
         mSuccessImage = findViewById(R.id.successfully_scan)
         mZBarView = findViewById(R.id.zbarview)
@@ -143,12 +148,19 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
             .subscribe(object: Observer<DrugDetail> {
                 override fun onNext(value: DrugDetail?) {
                     Log.i(TAG, value.toString())
-                    value?.toString()?.let { response ->
-                        if (response == "Success!") {
-                            // todo jump to drug detail screen
+                    value?.let { response ->
+                        if (response.code == Configs.requestSuccess) {
+                            // go to drug detail screen
+                            val intent = Intent(this@ScanDrugActivity, DrugDetailActivity::class.java)
+                            val bundle = Bundle()
+                            bundle.putSerializable("drugDetail", value)
+                            bundle.putString("drugName", drug.items[0].title)
+                            bundle.putString("drugDescription", drug.items[0].description)
+                            intent.putExtras(bundle)
+                            startActivity(intent)
                             finish()
                         } else {
-                            Toast.makeText(this@ScanDrugActivity, response, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ScanDrugActivity, response.msg, Toast.LENGTH_SHORT).show()
                             hideSuccessScan()
                         }
                     }
@@ -176,7 +188,7 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
     }
 
     override fun onScanQRCodeOpenCameraError() {
-        Toast.makeText(this, "scan barcode failed", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "scan barcode failed", Toast.LENGTH_SHORT).show()
     }
 
 
@@ -218,6 +230,24 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
                 }
             } else {
                 startSelectPhoto()
+            }
+        } else if (requestCode == 1) {
+            if (grantResults.isNotEmpty() && grantResults[0] !== PackageManager.PERMISSION_GRANTED) {
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(
+                        this@ScanDrugActivity,
+                        Manifest.permission.CAMERA
+                    )
+                ) {
+                    Toast.makeText(this, "Permission Request is Rejected!", Toast.LENGTH_LONG).show()
+
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri: Uri = Uri.fromParts("package", packageName, null)
+                    intent.data = uri
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Permission Request is Rejected!", Toast.LENGTH_LONG).show()
+                    finish()
+                }
             }
         }
     }

@@ -2,4 +2,12 @@
     <string name="app_name">EasyDrug</string>
     <string name="home_learn_title">Do you know milk can\'t be taken with antibiotics?</string>
     <string name="tap_here_to_edit_info">Tap here to edit info</string>
+    <string name="disclaimer">*Disclaimer: These results are only a guideline. Check with your healthcare provider to determine if any adjustments to your medications are needed.</string>
+    <string name="possibilities_string">Possibilities</string>
+    <string name="go_to_record_text">Press to Record Food Ingredients</string>
+    <string name="go_to_pause_text">Press to Stop Recording</string>
+    <string name="speech_food_check1_title">Record Slowly</string>
+    <string name="speech_food_check1_text">Stop for 0.5-1s between each ingredient</string>
+    <string name="speech_food_check2_text">“E.g: Cheese, bacon, egg, red pepper, flour, tomato, basil”</string>
+    <string name="speech_food_check2_title">Only say food ingredients</string>
 </resources>

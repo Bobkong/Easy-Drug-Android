@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.easydrug.Configs;
 import com.example.easydrug.R;
+import com.githang.statusbar.StatusBarCompat;
 
 public class OnBoardingScanDrugActivity extends Activity{
     private ConstraintLayout letsGoScanDrug;
@@ -18,6 +19,7 @@ public class OnBoardingScanDrugActivity extends Activity{
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboardingscandrug);
+        StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
         letsGoScanDrug = findViewById(R.id.letsgo_scandrug);
         letsGoScanDrug.setOnClickListener(new View.OnClickListener() {
             @Override
