@@ -25,6 +25,7 @@ public class OnboardingActivity extends Activity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(OnboardingActivity.this, SignUpActivity.class));
+                finish();
             }
         });
 

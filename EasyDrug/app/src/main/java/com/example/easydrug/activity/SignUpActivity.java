@@ -66,6 +66,7 @@ public class SignUpActivity extends Activity {
                                 FileUtil.saveSPString(SignUpActivity.this, Configs.userNameKey, username.getText().toString());
                                 FileUtil.saveSPString(SignUpActivity.this, Configs.passwordKey, password1.getText().toString());
                                 FileUtil.saveSPBool(SignUpActivity.this, Configs.ifSignedUpKey, true);
+                                finish();
                             } else {
                                 // toast
                                 Toast.makeText(getApplicationContext(), value.getMsg(), Toast.LENGTH_SHORT).show();

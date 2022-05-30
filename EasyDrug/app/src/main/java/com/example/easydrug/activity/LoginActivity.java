@@ -56,6 +56,7 @@ public class LoginActivity extends Activity {
                                     FileUtil.saveSPString(LoginActivity.this, Configs.userNameKey, username.getText().toString());
                                     FileUtil.saveSPString(LoginActivity.this, Configs.passwordKey, password.getText().toString());
                                     FileUtil.saveSPBool(LoginActivity.this, Configs.ifSignedUpKey, true);
+                                    finish();
                                 } else {
                                     // toast
                                     Toast.makeText(getApplicationContext(), value.getMsg(), Toast.LENGTH_SHORT).show();
@@ -66,6 +67,7 @@ public class LoginActivity extends Activity {
                             public void onError(Throwable e) {
                                 // fail
                                 Log.e(TAG, e.toString());
+                                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
 
                             @Override

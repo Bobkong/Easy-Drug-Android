@@ -13,4 +13,5 @@
     <color name="theme_color">#2949CD</color>
     <color name="transparent">#00000000</color>
     <color name="orange">#FFE8C6</color>
+    <color name="red">#D33525</color>
 </resources>

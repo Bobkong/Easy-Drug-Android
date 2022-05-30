@@ -27,6 +27,7 @@ public class OnBoardingScanDrugActivity extends Activity{
                 Intent intent = new Intent(OnBoardingScanDrugActivity.this, ScanDrugActivity.class);
                 intent.putExtra(Configs.ifFromOnBoarding, true);
                 startActivity(intent);
+                finish();
             }
         });
     }
