@@ -41,13 +41,6 @@ public class IngredientAdapter  extends RecyclerView.Adapter<IngredientViewHolde
         context.runOnUiThread(() -> notifyDataSetChanged());
     }
 
-    public void updateIngredient(int position, String ingredient) {
-        if (mData == null || mData.size() <= position) {
-            return;
-        }
-        mData.set(position, ingredient);
-    }
-
     public String getIngredient(int position) {
         if (mData == null || mData.size() <= position) {
             return "";

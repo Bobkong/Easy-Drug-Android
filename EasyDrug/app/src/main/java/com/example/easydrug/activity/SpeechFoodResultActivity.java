@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easydrug.R;
 import com.example.easydrug.adapter.IngredientAdapter;
+import com.example.easydrug.viewholder.IngredientViewHolder;
 import com.githang.statusbar.StatusBarCompat;
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
@@ -48,6 +49,20 @@ public class SpeechFoodResultActivity extends Activity {
             if (adapter == null || adapter.getItemCount() == 0) {
                 Toast.makeText(this, "Please input at least 1 ingredient!", Toast.LENGTH_SHORT).show();
             } else {
+                ArrayList<String> ingredients = new ArrayList<>();
+                for (int i = 0; i < adapter.getItemCount(); i++) {
+                    IngredientViewHolder holder = (IngredientViewHolder) ingredientsView.findViewHolderForAdapterPosition(i);
+
+                    if (holder != null) {
+                        String ingredient = holder.getIngredientName();
+                        if (ingredient != null && !ingredient.isEmpty()) {
+                            Log.i(TAG, "ingredient: " + ingredient);
+                            ingredients.add(ingredient);
+                        }
+
+                    }
+                }
+
                 // todo go to detail screen
             }
         });
