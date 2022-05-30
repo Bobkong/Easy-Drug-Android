@@ -143,44 +143,56 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
     }
 
     private fun requestDrugDetail(drug: DrugLookUpInfo, upc: String) {
-        DrugService.getInstance().getDrugDetail(FileUtil.getSPString(this, Configs.userNameKey), drug.items[0].title, drug.items[0].description)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object: Observer<DrugDetail> {
-                override fun onNext(value: DrugDetail?) {
-                    Log.i(TAG, value.toString())
-                    value?.let { response ->
-                        if (response.code == Configs.requestSuccess) {
-                            // go to drug detail screen
-                            val intent = Intent(this@ScanDrugActivity, DrugDetailActivity::class.java)
-                            val bundle = Bundle()
-                            bundle.putSerializable("drugDetail", value)
-                            bundle.putString("drugName", drug.items[0].title)
-                            bundle.putString("drugDescription", drug.items[0].description)
-                            intent.putExtras(bundle)
-                            startActivity(intent)
-                            finish()
-                        } else {
-                            Toast.makeText(this@ScanDrugActivity, response.msg, Toast.LENGTH_SHORT).show()
-                            hideSuccessScan()
-                        }
-                    }
-                }
-
-                override fun onError(e: Throwable?) {
-                    Log.e(TAG, e.toString())
-                    Toast.makeText(this@ScanDrugActivity, e?.message, Toast.LENGTH_SHORT).show()
-                    hideSuccessScan()
-                }
-
-                override fun onSubscribe(d: Disposable?) {
-                    Log.e(TAG, d.toString())
-                }
-
-                override fun onComplete() {
-                    Log.e(TAG, "onComplete")
-                }
-
-            })
+        // test
+        val intent = Intent(this@ScanDrugActivity, DrugDetailActivity::class.java)
+        val bundle = Bundle()
+        bundle.putString("drugName", drug.items[0]?.title)
+        bundle.putString("drugDescription", drug.items[0]?.description)
+        bundle.putString("drugImage", drug.items[0]?.images?.get(0))
+        bundle.putString("upc", upc)
+        intent.putExtras(bundle)
+        startActivity(intent)
+        finish()
+//        DrugService.getInstance().getDrugDetail(FileUtil.getSPString(this, Configs.userNameKey), drug.items[0].title, drug.items[0].description)
+//            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(object: Observer<DrugDetail> {
+//                override fun onNext(value: DrugDetail?) {
+//                    Log.i(TAG, value.toString())
+//                    value?.let { response ->
+//                        if (response.code == Configs.requestSuccess) {
+//                            // go to drug detail screen
+//                            val intent = Intent(this@ScanDrugActivity, DrugDetailActivity::class.java)
+//                            val bundle = Bundle()
+//                            bundle.putSerializable("drugDetail", value)
+//                            bundle.putString("drugName", drug.items[0]?.title)
+//                            bundle.putString("drugDescription", drug.items[0]?.description)
+//                            bundle.putString("drugImage", drug.items[0]?.images?.get(0))
+//                            bundle.putString("upc", upc)
+//                            intent.putExtras(bundle)
+//                            startActivity(intent)
+//                            finish()
+//                        } else {
+//                            Toast.makeText(this@ScanDrugActivity, response.msg, Toast.LENGTH_SHORT).show()
+//                            hideSuccessScan()
+//                        }
+//                    }
+//                }
+//
+//                override fun onError(e: Throwable?) {
+//                    Log.e(TAG, e.toString())
+//                    Toast.makeText(this@ScanDrugActivity, e?.message, Toast.LENGTH_SHORT).show()
+//                    hideSuccessScan()
+//                }
+//
+//                override fun onSubscribe(d: Disposable?) {
+//                    Log.e(TAG, d.toString())
+//                }
+//
+//                override fun onComplete() {
+//                    Log.e(TAG, "onComplete")
+//                }
+//
+//            })
     }
 
     override fun onCameraAmbientBrightnessChanged(isDark: Boolean) {

@@ -27,8 +27,8 @@ public class ExpandTextView extends TextView {
     private int mMaxLines = 7;// TextView最大行数
     private SpannableString SPAN_CLOSE = null;// 收起的文案(颜色处理)
     private SpannableString SPAN_EXPAND = null;// 展开的文案(颜色处理)
-    private String TEXT_EXPAND = "View More";
-    private String TEXT_CLOSE = "Show Less";
+    private String TEXT_EXPAND = " View More";
+    private String TEXT_CLOSE = " Show Less";
 
     public ExpandTextView(Context context) {
         super(context);
