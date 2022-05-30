@@ -61,4 +61,7 @@ dependencies {
 
     // tag recyclerview
     implementation 'com.google.android:flexbox:2.0.1'
+
+    // lottie
+    implementation 'com.airbnb.android:lottie:3.4.4'
 }

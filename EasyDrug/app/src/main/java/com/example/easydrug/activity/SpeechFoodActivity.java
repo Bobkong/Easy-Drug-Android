@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.easydrug.R;
 import com.githang.statusbar.StatusBarCompat;
 import com.microsoft.cognitiveservices.speech.SpeechConfig;
@@ -32,6 +33,7 @@ public class SpeechFoodActivity extends Activity {
     private TextView recordTitle;
     private ImageView analyzeSpeech;
     private ImageView backButton;
+    private LottieAnimationView recordLottie;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,9 @@ public class SpeechFoodActivity extends Activity {
 
         recordTitle = findViewById(R.id.record_title);
         analyzeSpeech = findViewById(R.id.analyzing_speech);
+
+        recordLottie = findViewById(R.id.record_lottie);
+
         backButton = findViewById(R.id.back);
 
         backButton.setOnClickListener(v -> startActivity(new Intent(SpeechFoodActivity.this, MainActivity.class)));
@@ -83,12 +88,17 @@ public class SpeechFoodActivity extends Activity {
             button.setImageResource(R.drawable.record_play);
             recordTitle.setText(R.string.go_to_record_text);
             analyzeSpeech.setVisibility(View.VISIBLE);
+            recordLottie.cancelAnimation();
+            recordLottie.setVisibility(View.GONE);
         } else {
             recordingResult = new StringBuilder();
             isRecording = true;
             reco.startContinuousRecognitionAsync();
             button.setImageResource(R.drawable.record_pause);
             recordTitle.setText(R.string.go_to_pause_text);
+            recordLottie.setVisibility(View.VISIBLE);
+            recordLottie.playAnimation();
+            recordLottie.loop(true);
         }
 
 
