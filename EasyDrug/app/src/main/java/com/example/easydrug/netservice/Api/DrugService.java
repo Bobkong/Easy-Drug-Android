@@ -11,8 +11,7 @@ import io.reactivex.schedulers.Schedulers;
 import com.example.easydrug.model.DrugCode;
 import com.example.easydrug.model.DrugInfo;
 import com.example.easydrug.model.DrugList;
-import com.example.easydrug.model.User;
-import okhttp3.ResponseBody;
+import com.example.easydrug.model.SignUserParam;
 
 public class DrugService {
     private static DrugService instance;
@@ -25,7 +24,7 @@ public class DrugService {
     private final DrugApi drugApi= EasyDrugServiceManager.getInstance().create(DrugApi.class);
 
     public Observable<DrugList> getDrugList(String username, String password){
-        return drugApi.getDrugList(new User(username, password))
+        return drugApi.getDrugList(new SignUserParam(username, password))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }

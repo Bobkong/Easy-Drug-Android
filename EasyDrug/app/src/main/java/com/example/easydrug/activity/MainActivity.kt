@@ -17,10 +17,10 @@ import androidx.fragment.app.FragmentActivity
 import com.example.easydrug.Configs
 import com.example.easydrug.R
 import com.example.easydrug.Utils.FileUtil
-import com.example.easydrug.Utils.FinishActivity
+import com.example.easydrug.Utils.FinishActivityEvent
 import com.example.easydrug.Utils.UIUtils
+import com.example.easydrug.Utils.UpdateProfileEvent
 import com.example.easydrug.fragment.CustomBottomSheetDialogFragment
-import com.example.easydrug.widget.TwoButtonDialog
 import com.githang.statusbar.StatusBarCompat
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -147,8 +147,13 @@ class MainActivity : FragmentActivity() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: FinishActivity) {
+    fun onEvent(event: FinishActivityEvent) {
         finish()
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onEvent(event: UpdateProfileEvent) {
+        helloText?.text = "Hello, " + FileUtil.getSPString(this, Configs.userNameKey) + "!"
     }
 
     override fun onDestroy() {

@@ -77,6 +77,7 @@ public class SignUpActivity extends Activity {
                         public void onError(Throwable e) {
                             // fail
                             Log.e(TAG, e.toString());
+                            Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override

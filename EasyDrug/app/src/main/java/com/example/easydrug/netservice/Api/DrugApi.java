@@ -7,8 +7,8 @@ import com.example.easydrug.model.DrugDetailRequestParam;
 import com.example.easydrug.model.DrugInfo;
 import com.example.easydrug.model.DrugList;
 import com.example.easydrug.model.GeneralResponse;
-import com.example.easydrug.model.User;
-import okhttp3.ResponseBody;
+import com.example.easydrug.model.SignUserParam;
+
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
@@ -17,7 +17,7 @@ public interface DrugApi {
     //sign up
     @POST("/getDrugList")
     Observable<DrugList> getDrugList(
-            @Body User params
+            @Body SignUserParam params
     );
 
     //add drug

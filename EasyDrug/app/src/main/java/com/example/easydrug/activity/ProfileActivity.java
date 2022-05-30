@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -15,12 +16,19 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.easydrug.Configs;
 import com.example.easydrug.R;
 import com.example.easydrug.Utils.FileUtil;
-import com.example.easydrug.Utils.FinishActivity;
+import com.example.easydrug.Utils.FinishActivityEvent;
 import com.example.easydrug.Utils.UIUtils;
+import com.example.easydrug.Utils.UpdateProfileEvent;
+import com.example.easydrug.model.GeneralResponse;
+import com.example.easydrug.netservice.Api.SignService;
 import com.example.easydrug.widget.TwoButtonDialog;
 import com.githang.statusbar.StatusBarCompat;
 
 import org.greenrobot.eventbus.EventBus;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 
 public class ProfileActivity extends Activity {
 
@@ -49,6 +57,8 @@ public class ProfileActivity extends Activity {
         saveButton = findViewById(R.id.save_button);
         showPassword = findViewById(R.id.show_password);
         profileList = findViewById(R.id.profile_list);
+        username = findViewById(R.id.username);
+        username.setText(FileUtil.getSPString(ProfileActivity.this, Configs.userNameKey));
 
         back.setOnClickListener(v -> {
             if (editProfileView.getVisibility() == View.VISIBLE) {
@@ -66,37 +76,64 @@ public class ProfileActivity extends Activity {
             editProfileView.setVisibility(View.VISIBLE);
             usernameEdit.setText(FileUtil.getSPString(ProfileActivity.this, Configs.userNameKey));
             String password = FileUtil.getSPString(ProfileActivity.this, Configs.passwordKey);
-            StringBuilder passwordHide = new StringBuilder();
-            for (int i = 0; i < password.length(); i++) {
-                passwordHide.append("*");
-            }
-            passwordEdit.setText(passwordHide);
+            passwordEdit.setText(password);
+            passwordEdit.setInputType(129);
         });
 
         showPassword.setOnClickListener(v -> {
-            String password = FileUtil.getSPString(ProfileActivity.this, Configs.passwordKey);
             if (isShowPassword) {
                 int padding = UIUtils.dp2px(this, 10f);
                 showPassword.setPadding(padding, padding, padding, padding);
                 showPassword.setImageResource(R.drawable.hide_password);
-                StringBuilder passwordHide = new StringBuilder();
-                for (int i = 0; i < password.length(); i++) {
-                    passwordHide.append("*");
-                }
-                passwordEdit.setText(passwordHide);
+                passwordEdit.setInputType(129);
                 isShowPassword = false;
             } else {
                 showPassword.setImageResource(R.drawable.see_password);
                 int padding = UIUtils.dp2px(this, 8f);
                 showPassword.setPadding(padding, padding, padding, padding);
-                passwordEdit.setText(password);
+                passwordEdit.setInputType(128);
                 isShowPassword = true;
             }
         });
 
         saveButton.setOnClickListener(v -> {
-            // todo update profile
+            if (usernameEdit.getText().toString().equals(FileUtil.getSPString(ProfileActivity.this, Configs.userNameKey))
+            && passwordEdit.getText().toString().equals(FileUtil.getSPString(ProfileActivity.this, Configs.passwordKey))) {
+                Toast.makeText(this, "Nothing changes!", Toast.LENGTH_SHORT).show();
+            } else {
+                SignService.getInstance().updateProfile(FileUtil.getSPString(ProfileActivity.this, Configs.userNameKey),
+                        usernameEdit.getText().toString(), passwordEdit.getText().toString())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<GeneralResponse>() {
+                            @Override
+                            public void onSubscribe(Disposable d) {
 
+                            }
+
+                            @Override
+                            public void onNext(GeneralResponse value) {
+                                if (value.getCode() == Configs.requestSuccess) {
+                                    FileUtil.saveSPString(ProfileActivity.this, Configs.userNameKey, usernameEdit.getText().toString());
+                                    FileUtil.saveSPString(ProfileActivity.this, Configs.passwordKey, passwordEdit.getText().toString());
+                                    username.setText(usernameEdit.getText().toString());
+                                    EventBus.getDefault().post(new UpdateProfileEvent());
+                                    Toast.makeText(ProfileActivity.this, "Successfully Saved!", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(ProfileActivity.this, value.getMsg(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Toast.makeText(ProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onComplete() {
+
+                            }
+                        });
+            }
         });
 
         logout.setOnClickListener(v -> {
@@ -108,7 +145,7 @@ public class ProfileActivity extends Activity {
                 FileUtil.deleteSPString(ProfileActivity.this, Configs.passwordKey);
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                 finish();
-                EventBus.getDefault().post(new FinishActivity());
+                EventBus.getDefault().post(new FinishActivityEvent());
             }).setTitle(getString(R.string.log_out_title))
                     .setStatusImgRes(R.drawable.dialog_warning)
                     .setRightButtonText("Log Out")

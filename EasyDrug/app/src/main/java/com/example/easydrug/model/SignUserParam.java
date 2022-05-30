@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 
-public class User implements Serializable {
+public class SignUserParam implements Serializable {
 	@SerializedName("username")
 	String username;
 	@SerializedName("password")
 	String password;
 
-	public User(String username, String password) {
+	public SignUserParam(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}

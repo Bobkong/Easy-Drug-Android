@@ -2,13 +2,13 @@ package com.example.easydrug.netservice.Api;
 
 
 import com.example.easydrug.model.GeneralResponse;
+import com.example.easydrug.model.UpdateProfileParam;
 import com.example.easydrug.netservice.HttpResultFunc;
 import com.example.easydrug.netservice.EasyDrugServiceManager;
 
 import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
-import com.example.easydrug.model.User;
-import okhttp3.ResponseBody;
+import com.example.easydrug.model.SignUserParam;
 
 public class SignService {
     private static SignService instance;
@@ -21,13 +21,19 @@ public class SignService {
     private final SignApi signApi= EasyDrugServiceManager.getInstance().create(SignApi.class);
 
     public Observable<GeneralResponse> signUp(String username, String password){
-        return signApi.signUp(new User(username, password))
+        return signApi.signUp(new SignUserParam(username, password))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
     public Observable<GeneralResponse> signIn(String username, String password){
-        return signApi.signIn(new User(username, password))
+        return signApi.signIn(new SignUserParam(username, password))
+                .onErrorResumeNext(new HttpResultFunc<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Observable<GeneralResponse> updateProfile(String oldUsername, String newUsername, String newPassword){
+        return signApi.updateProfile(new UpdateProfileParam(oldUsername, newUsername, newPassword))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
