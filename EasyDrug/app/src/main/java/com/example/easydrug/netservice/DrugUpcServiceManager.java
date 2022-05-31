@@ -2,7 +2,7 @@ package com.example.easydrug.netservice;
 
 
 import com.example.easydrug.MyApplication;
-import com.example.easydrug.netservice.Util.NetworkUtil;
+import com.example.easydrug.Utils.NetworkUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

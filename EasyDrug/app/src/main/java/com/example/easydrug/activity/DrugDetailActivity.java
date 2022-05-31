@@ -2,20 +2,23 @@ package com.example.easydrug.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.easydrug.R;
+import com.example.easydrug.Utils.SpeechUtil;
 import com.example.easydrug.Utils.UIUtils;
 import com.example.easydrug.adapter.DrugInteractionAdapter;
-import com.example.easydrug.model.DrugDetail;
 import com.example.easydrug.widget.ExpandTextView;
 import com.example.easydrug.widget.OneButtonDialog;
 import com.githang.statusbar.StatusBarCompat;
@@ -29,6 +32,8 @@ public class DrugDetailActivity extends Activity {
     private TextView drugName;
     private ConstraintLayout addToList;
     private ImageView drugImage;
+    private TextView disclaimer;
+    private ImageView descriptionSpeaker;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +51,11 @@ public class DrugDetailActivity extends Activity {
         drugDescription.initWidth(width);
         drugDescription.setMaxLines(7);
         drugDescription.setCloseText(description);
+
+        descriptionSpeaker = findViewById(R.id.description_speaker);
+        descriptionSpeaker.setOnClickListener(v -> {
+            SpeechUtil.speechText(DrugDetailActivity.this, description);
+        });
 
         drugName = findViewById(R.id.drug_name);
         drugName.setText(name);
@@ -69,8 +79,20 @@ public class DrugDetailActivity extends Activity {
                 // todo go to drug list screen
 
             }).setTitle("Successfully added to list!")
-            .setStatusImgRes(R.drawable.dialog_error)
+            .setStatusImgRes(R.drawable.dialog_correct)
             .show();
         });
+
+        disclaimer = findViewById(R.id.disclaimer);
+        String disclaimerText = getResources().getString(R.string.disclaimer);
+        SpannableString span = new SpannableString(disclaimerText);
+        span.setSpan(new StyleSpan(Typeface.BOLD), 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        disclaimer.setText(span);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SpeechUtil.destroy();
     }
 }
