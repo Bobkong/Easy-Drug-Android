@@ -37,4 +37,9 @@ public class SideEffectPossibility implements Serializable {
     public void setDefinition(String definition) {
         this.definition = definition;
     }
+
+    public SideEffectPossibility(String sideEffectName, String definition) {
+        this.sideEffectName = sideEffectName;
+        this.definition = definition;
+    }
 }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.StyleSpan;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.example.easydrug.R;
 import com.example.easydrug.Utils.SpeechUtil;
 import com.example.easydrug.Utils.UIUtils;
 import com.example.easydrug.adapter.DrugInteractionAdapter;
+import com.example.easydrug.model.DrugDetail;
 import com.example.easydrug.widget.ExpandTextView;
 import com.example.easydrug.widget.OneButtonDialog;
 import com.githang.statusbar.StatusBarCompat;
@@ -34,17 +36,29 @@ public class DrugDetailActivity extends Activity {
     private ImageView drugImage;
     private TextView disclaimer;
     private ImageView descriptionSpeaker;
+    private ConstraintLayout noDrugView;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drug_detail);
         StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
 
+        noDrugView = findViewById(R.id.no_drug_view);
+
         Intent intent = getIntent();
         String name = intent.getStringExtra("drugName");
         String description = intent.getStringExtra("drugDescription");
         String imageUrl = intent.getStringExtra("drugImage");
-        //DrugDetail drugDetail = (DrugDetail) intent.getSerializableExtra("drugDetail");
+
+        DrugDetail drugDetail = (DrugDetail) intent.getSerializableExtra("drugDetail");
+        if (drugDetail.getDrugDetailContent().isDrugListEmpty()) {
+            noDrugView.setVisibility(View.VISIBLE);
+        } else {
+            noDrugView.setVisibility(View.GONE);
+        }
+
+        if (drugDetail.getDrugDetailContent().getDrugInteractions().isEmpty()) {
+        }
 
         drugDescription = findViewById(R.id.description_content);
         int width = UIUtils.getWidth(this) - UIUtils.dp2px(this, 72);

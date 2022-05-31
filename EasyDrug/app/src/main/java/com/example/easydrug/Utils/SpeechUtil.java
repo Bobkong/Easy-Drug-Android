@@ -62,9 +62,13 @@ public class SpeechUtil {
 
     // when exit activity
     public static void destroy() {
-        synthesizer.close();
-        speechConfig.close();
-        synthesizer = null;
-        speechConfig = null;
+        if (synthesizer != null) {
+            synthesizer.close();
+            synthesizer = null;
+        }
+        if (speechConfig != null) {
+            speechConfig.close();
+            speechConfig = null;
+        }
     }
 }
