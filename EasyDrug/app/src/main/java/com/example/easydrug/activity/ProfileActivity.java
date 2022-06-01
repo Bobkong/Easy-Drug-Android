@@ -17,6 +17,7 @@ import com.example.easydrug.Configs;
 import com.example.easydrug.R;
 import com.example.easydrug.Utils.FileUtil;
 import com.example.easydrug.Utils.FinishActivityEvent;
+import com.example.easydrug.Utils.PasswordEncryptUtil;
 import com.example.easydrug.Utils.UIUtils;
 import com.example.easydrug.Utils.UpdateProfileEvent;
 import com.example.easydrug.model.GeneralResponse;
@@ -75,7 +76,7 @@ public class ProfileActivity extends Activity {
             profileList.setVisibility(View.GONE);
             editProfileView.setVisibility(View.VISIBLE);
             usernameEdit.setText(FileUtil.getSPString(ProfileActivity.this, Configs.userNameKey));
-            String password = FileUtil.getSPString(ProfileActivity.this, Configs.passwordKey);
+            String password = PasswordEncryptUtil.INSTANCE.decrypt(FileUtil.getSPString(ProfileActivity.this, Configs.passwordKey));
             passwordEdit.setText(password);
             passwordEdit.setInputType(129);
         });
@@ -98,11 +99,11 @@ public class ProfileActivity extends Activity {
 
         saveButton.setOnClickListener(v -> {
             if (usernameEdit.getText().toString().equals(FileUtil.getSPString(ProfileActivity.this, Configs.userNameKey))
-            && passwordEdit.getText().toString().equals(FileUtil.getSPString(ProfileActivity.this, Configs.passwordKey))) {
+            && passwordEdit.getText().toString().equals(PasswordEncryptUtil.INSTANCE.decrypt(FileUtil.getSPString(ProfileActivity.this, Configs.passwordKey)))) {
                 Toast.makeText(this, "Nothing changes!", Toast.LENGTH_SHORT).show();
             } else {
                 SignService.getInstance().updateProfile(FileUtil.getSPString(ProfileActivity.this, Configs.userNameKey),
-                        usernameEdit.getText().toString(), passwordEdit.getText().toString())
+                        usernameEdit.getText().toString(), PasswordEncryptUtil.INSTANCE.encrypt(passwordEdit.getText().toString()))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<GeneralResponse>() {
                             @Override
@@ -114,7 +115,7 @@ public class ProfileActivity extends Activity {
                             public void onNext(GeneralResponse value) {
                                 if (value.getCode() == Configs.requestSuccess) {
                                     FileUtil.saveSPString(ProfileActivity.this, Configs.userNameKey, usernameEdit.getText().toString());
-                                    FileUtil.saveSPString(ProfileActivity.this, Configs.passwordKey, passwordEdit.getText().toString());
+                                    FileUtil.saveSPString(ProfileActivity.this, Configs.passwordKey, PasswordEncryptUtil.INSTANCE.encrypt(passwordEdit.getText().toString()));
                                     username.setText(usernameEdit.getText().toString());
                                     EventBus.getDefault().post(new UpdateProfileEvent());
                                     Toast.makeText(ProfileActivity.this, "Successfully Saved!", Toast.LENGTH_SHORT).show();

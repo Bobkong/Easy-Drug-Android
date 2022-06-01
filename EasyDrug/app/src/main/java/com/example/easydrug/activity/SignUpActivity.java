@@ -16,6 +16,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.easydrug.Configs;
 import com.example.easydrug.R;
 import com.example.easydrug.Utils.FileUtil;
+import com.example.easydrug.Utils.PasswordEncryptUtil;
 import com.example.easydrug.model.GeneralResponse;
 import com.example.easydrug.netservice.Api.SignService;
 import com.githang.statusbar.StatusBarCompat;
@@ -49,7 +50,7 @@ public class SignUpActivity extends Activity {
                 } else if (!password1.getText().toString().equals(password2.getText().toString())) {
                     Toast.makeText(getApplicationContext(), "Passwords don't match!", Toast.LENGTH_SHORT).show();
                 } else {
-                    SignService.getInstance().signUp(username.getText().toString(), password1.getText().toString()).observeOn(AndroidSchedulers.mainThread())
+                    SignService.getInstance().signUp(username.getText().toString(), PasswordEncryptUtil.INSTANCE.encrypt(password1.getText().toString())).observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<GeneralResponse>() {
                         @Override
                         public void onSubscribe(Disposable d) {
@@ -64,7 +65,7 @@ public class SignUpActivity extends Activity {
                                 startActivity(new Intent(SignUpActivity.this, OnBoardingScanDrugActivity.class));
                                 // save to local db
                                 FileUtil.saveSPString(SignUpActivity.this, Configs.userNameKey, username.getText().toString());
-                                FileUtil.saveSPString(SignUpActivity.this, Configs.passwordKey, password1.getText().toString());
+                                FileUtil.saveSPString(SignUpActivity.this, Configs.passwordKey, PasswordEncryptUtil.INSTANCE.encrypt(password1.getText().toString()));
                                 FileUtil.saveSPBool(SignUpActivity.this, Configs.ifSignedUpKey, true);
                                 finish();
                             } else {

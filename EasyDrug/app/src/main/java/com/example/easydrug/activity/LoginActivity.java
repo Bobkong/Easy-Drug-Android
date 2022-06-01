@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.example.easydrug.Configs;
 import com.example.easydrug.R;
 import com.example.easydrug.Utils.FileUtil;
+import com.example.easydrug.Utils.PasswordEncryptUtil;
 import com.example.easydrug.model.GeneralResponse;
 import com.example.easydrug.netservice.Api.SignService;
 import com.githang.statusbar.StatusBarCompat;
@@ -41,7 +42,7 @@ public class LoginActivity extends Activity {
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SignService.getInstance().signIn(username.getText().toString(), password.getText().toString()).observeOn(AndroidSchedulers.mainThread())
+                SignService.getInstance().signIn(username.getText().toString(), PasswordEncryptUtil.INSTANCE.encrypt(password.getText().toString())).observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<GeneralResponse>() {
                             @Override
                             public void onSubscribe(Disposable d) {
@@ -54,7 +55,7 @@ public class LoginActivity extends Activity {
                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                                     // save to local db
                                     FileUtil.saveSPString(LoginActivity.this, Configs.userNameKey, username.getText().toString());
-                                    FileUtil.saveSPString(LoginActivity.this, Configs.passwordKey, password.getText().toString());
+                                    FileUtil.saveSPString(LoginActivity.this, Configs.passwordKey, PasswordEncryptUtil.INSTANCE.encrypt(password.getText().toString()));
                                     FileUtil.saveSPBool(LoginActivity.this, Configs.ifSignedUpKey, true);
                                     finish();
                                 } else {
