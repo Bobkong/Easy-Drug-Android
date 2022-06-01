@@ -19,14 +19,11 @@ import cn.bingoogolapple.qrcode.zbar.ZBarView
 import com.example.easydrug.Configs
 import com.example.easydrug.R
 import com.example.easydrug.Utils.FileUtil
-import com.example.easydrug.model.DrugDetail
+import com.example.easydrug.Utils.RouteUtil
 import com.example.easydrug.model.DrugLookUpInfo
 import com.example.easydrug.netservice.Api.DrugLookUpService
-import com.example.easydrug.netservice.Api.DrugService
 import com.githang.statusbar.StatusBarCompat
-import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
 
 class ScanDrugActivity: Activity(), QRCodeView.Delegate {
 
@@ -143,56 +140,9 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
     }
 
     private fun requestDrugDetail(drug: DrugLookUpInfo, upc: String) {
-        // test
-        val intent = Intent(this@ScanDrugActivity, DrugDetailActivity::class.java)
-        val bundle = Bundle()
-        bundle.putString("drugName", drug.items[0]?.title)
-        bundle.putString("drugDescription", drug.items[0]?.description)
-        bundle.putString("drugImage", drug.items[0]?.images?.get(0))
-        bundle.putString("upc", upc)
-        intent.putExtras(bundle)
-        startActivity(intent)
+        // go to drug detail screen
+        RouteUtil.gotoDrugDetailScreen(this@ScanDrugActivity, drug.items[0]?.title, drug.items[0]?.description, drug.items[0]?.images?.get(0), upc)
         finish()
-//        DrugService.getInstance().getDrugDetail(FileUtil.getSPString(this, Configs.userNameKey), drug.items[0].title, drug.items[0].description)
-//            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(object: Observer<DrugDetail> {
-//                override fun onNext(value: DrugDetail?) {
-//                    Log.i(TAG, value.toString())
-//                    value?.let { response ->
-//                        if (response.code == Configs.requestSuccess) {
-//                            // go to drug detail screen
-//                            val intent = Intent(this@ScanDrugActivity, DrugDetailActivity::class.java)
-//                            val bundle = Bundle()
-//                            bundle.putSerializable("drugDetail", value)
-//                            bundle.putString("drugName", drug.items[0]?.title)
-//                            bundle.putString("drugDescription", drug.items[0]?.description)
-//                            bundle.putString("drugImage", drug.items[0]?.images?.get(0))
-//                            bundle.putString("upc", upc)
-//                            intent.putExtras(bundle)
-//                            startActivity(intent)
-//                            finish()
-//                        } else {
-//                            Toast.makeText(this@ScanDrugActivity, response.msg, Toast.LENGTH_SHORT).show()
-//                            hideSuccessScan()
-//                        }
-//                    }
-//                }
-//
-//                override fun onError(e: Throwable?) {
-//                    Log.e(TAG, e.toString())
-//                    Toast.makeText(this@ScanDrugActivity, e?.message, Toast.LENGTH_SHORT).show()
-//                    hideSuccessScan()
-//                }
-//
-//                override fun onSubscribe(d: Disposable?) {
-//                    Log.e(TAG, d.toString())
-//                }
-//
-//                override fun onComplete() {
-//                    Log.e(TAG, "onComplete")
-//                }
-//
-//            })
     }
 
     override fun onCameraAmbientBrightnessChanged(isDark: Boolean) {

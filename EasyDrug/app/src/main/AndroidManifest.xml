@@ -38,7 +38,6 @@
         <activity android:name=".activity.ScanDrugActivity"
             android:theme="@style/NoActionBar"/>
         <activity android:name=".activity.SpeechFoodActivity" />
-        <activity android:name=".activity.TextToSpeechActivity" />
         <activity android:name=".activity.DrugDetailActivity"
             android:theme="@style/AppTheme"/>
         <activity android:name=".activity.OnboardingActivity" />

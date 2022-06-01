@@ -11,4 +11,8 @@
     <string name="speech_food_check2_text">“E.g: Cheese, bacon, egg, red pepper, flour, tomato, basil”</string>
     <string name="speech_food_check2_title">Only say food ingredients</string>
     <string name="log_out_title">Are you sure you want to Log Out of the app?</string>
+    <string name="interaction_load_error">Cant\' load drug interactions</string>
+    <string name="interaction_loading">Loading drug interactions, please wait!</string>
+    <string name="interaction_no_drug">No drugs in list</string>
+    <string name="interaction_not_detected">No interactions detected!</string>
 </resources>

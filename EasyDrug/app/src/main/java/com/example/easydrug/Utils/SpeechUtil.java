@@ -19,6 +19,7 @@ public class SpeechUtil {
     private static String TAG = "SpeechUtil";
     private static SpeechConfig speechConfig;
     private static SpeechSynthesizer synthesizer;
+    private static Thread thread;
 
     public static void speechText(Activity activity, String text) {
         // Note: we need to request the permissions
@@ -32,9 +33,11 @@ public class SpeechUtil {
 
         if (synthesizer == null) {
             synthesizer = new SpeechSynthesizer(speechConfig);
+        } else {
+            synthesizer.StopSpeakingAsync();
         }
 
-        new Thread(() -> {
+        thread = new Thread(() -> {
             try {
                 // Note: this will block the UI thread, so eventually, you want to register for the event
                 SpeechSynthesisResult result = synthesizer.SpeakText(text);
@@ -56,7 +59,8 @@ public class SpeechUtil {
                 Log.e("SpeechSDKDemo", "unexpected " + ex.getMessage());
                 assert(false);
             }
-        }).start();
+        });
+        thread.start();
 
     }
 
@@ -69,6 +73,10 @@ public class SpeechUtil {
         if (speechConfig != null) {
             speechConfig.close();
             speechConfig = null;
+        }
+        if (thread != null) {
+            thread.interrupt();
+            thread = null;
         }
     }
 }
