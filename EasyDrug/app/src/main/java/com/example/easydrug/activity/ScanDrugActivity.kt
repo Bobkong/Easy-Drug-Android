@@ -33,10 +33,11 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
     private var mChoosePic: LinearLayout? = null
     private var mHintLl: LinearLayout? = null
     private var mSuccessImage: ImageView? = null
+    private var ifFromOnBoarding = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var ifFromOnBoarding = intent.getBooleanExtra(Configs.ifFromOnBoarding, false)
+        ifFromOnBoarding = intent.getBooleanExtra(Configs.ifFromOnBoarding, false)
         Log.i(TAG, ifFromOnBoarding.toString())
 
 
@@ -127,8 +128,7 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
                     if (drug.items != null && drug.items.size != 0) {
                         // ensure scanning a drug
                         if (drug.items[0].category.startsWith("Health")) {
-                            // add drug to server
-                            requestDrugDetail(drug, it)
+                            gotoDrugDetail(drug, it)
                         } else {
                             hideSuccessScan()
                             Toast.makeText(this, "Please scan a drug", Toast.LENGTH_SHORT).show()
@@ -139,9 +139,9 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
         }
     }
 
-    private fun requestDrugDetail(drug: DrugLookUpInfo, upc: String) {
+    private fun gotoDrugDetail(drug: DrugLookUpInfo, upc: String) {
         // go to drug detail screen
-        RouteUtil.gotoDrugDetailScreen(this@ScanDrugActivity, drug.items[0]?.title, drug.items[0]?.description, drug.items[0]?.images?.get(0), upc)
+        RouteUtil.gotoDrugDetailScreen(this@ScanDrugActivity, ifFromOnBoarding, drug.items[0]?.title, drug.items[0]?.description, drug.items[0]?.images?.get(0), upc)
         finish()
     }
 

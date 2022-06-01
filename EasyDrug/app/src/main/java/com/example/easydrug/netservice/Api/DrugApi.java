@@ -6,6 +6,8 @@ import com.example.easydrug.model.DrugDetail;
 import com.example.easydrug.model.DrugDetailRequestParam;
 import com.example.easydrug.model.DrugInfo;
 import com.example.easydrug.model.DrugList;
+import com.example.easydrug.model.FoodInteractionDetail;
+import com.example.easydrug.model.FoodInteractionRequestParam;
 import com.example.easydrug.model.GeneralResponse;
 import com.example.easydrug.model.SignUserParam;
 
@@ -36,5 +38,11 @@ public interface DrugApi {
     @POST("/getDrugDetail")
     Observable<DrugDetail> getDrugDetail(
             @Body DrugDetailRequestParam params
+    );
+
+    //drug detail
+    @POST("/getDFI")
+    Observable<FoodInteractionDetail> getDFI(
+            @Body FoodInteractionRequestParam params
     );
 }

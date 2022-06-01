@@ -7,14 +7,14 @@ import java.util.ArrayList;
 
 public class DrugInteraction implements Serializable {
 
-    @SerializedName("drug_name")
+    @SerializedName("other_drug_name")
     String drugName;
 
     @SerializedName("interaction_desc")
     String interactionDesc;
 
-    @SerializedName("possibilities")
-    ArrayList<SideEffectPossibility> possibilities;
+    @SerializedName("probability")
+    int probability;
 
     public String getDrugName() {
         return drugName;
@@ -32,11 +32,11 @@ public class DrugInteraction implements Serializable {
         this.interactionDesc = interactionDesc;
     }
 
-    public ArrayList<SideEffectPossibility> getPossibilities() {
-        return possibilities;
+    public int getProbability() {
+        return probability;
     }
 
-    public void setPossibilities(ArrayList<SideEffectPossibility> possibilities) {
-        this.possibilities = possibilities;
+    public void setProbability(int probability) {
+        this.probability = probability;
     }
 }

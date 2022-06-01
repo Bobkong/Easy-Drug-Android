@@ -2,6 +2,8 @@ package com.example.easydrug.netservice.Api;
 
 import com.example.easydrug.model.DrugDetail;
 import com.example.easydrug.model.DrugDetailRequestParam;
+import com.example.easydrug.model.FoodInteractionDetail;
+import com.example.easydrug.model.FoodInteractionRequestParam;
 import com.example.easydrug.model.GeneralResponse;
 import com.example.easydrug.netservice.HttpResultFunc;
 import com.example.easydrug.netservice.EasyDrugServiceManager;
@@ -12,6 +14,8 @@ import com.example.easydrug.model.DrugCode;
 import com.example.easydrug.model.DrugInfo;
 import com.example.easydrug.model.DrugList;
 import com.example.easydrug.model.SignUserParam;
+
+import java.util.ArrayList;
 
 public class DrugService {
     private static DrugService instance;
@@ -42,6 +46,12 @@ public class DrugService {
 
     public Observable<DrugDetail> getDrugDetail(String username, String drugName, String drugDesc) {
         return drugApi.getDrugDetail(new DrugDetailRequestParam(username, drugName, drugDesc))
+                .onErrorResumeNext(new HttpResultFunc<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Observable<FoodInteractionDetail> getFoodInteractionDetail(String username, ArrayList<String> foodList) {
+        return drugApi.getDFI(new FoodInteractionRequestParam(username, foodList))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }

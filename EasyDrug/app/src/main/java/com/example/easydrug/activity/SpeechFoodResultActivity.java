@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easydrug.R;
+import com.example.easydrug.Utils.FinishActivityEvent;
 import com.example.easydrug.adapter.IngredientAdapter;
 import com.example.easydrug.viewholder.IngredientViewHolder;
 import com.githang.statusbar.StatusBarCompat;
@@ -20,6 +21,10 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -36,6 +41,7 @@ public class SpeechFoodResultActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech_food_result);
+        EventBus.getDefault().register(this);
         StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
         ingredientsView = findViewById(R.id.ingredient_recycler_view);
         backButton = findViewById(R.id.back);
@@ -62,8 +68,9 @@ public class SpeechFoodResultActivity extends Activity {
 
                     }
                 }
-
-                // todo go to detail screen
+                Intent intent = new Intent(SpeechFoodResultActivity.this, FoodInteractionActivity.class);
+                intent.putStringArrayListExtra("ingredients", ingredients);
+                startActivity(intent);
             }
         });
 
@@ -87,5 +94,16 @@ public class SpeechFoodResultActivity extends Activity {
         adapter = new IngredientAdapter(mData, this);
         ingredientsView.setAdapter(adapter);
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(FinishActivityEvent event) {
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

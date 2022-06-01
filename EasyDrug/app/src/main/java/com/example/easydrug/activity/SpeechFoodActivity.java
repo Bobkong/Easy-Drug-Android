@@ -9,6 +9,7 @@ import static com.example.easydrug.Configs.speechSubscriptionKey;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,9 +20,14 @@ import androidx.core.app.ActivityCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.easydrug.R;
+import com.example.easydrug.Utils.FinishActivityEvent;
 import com.githang.statusbar.StatusBarCompat;
 import com.microsoft.cognitiveservices.speech.SpeechConfig;
 import com.microsoft.cognitiveservices.speech.SpeechRecognizer;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 public class SpeechFoodActivity extends Activity {
 
@@ -38,6 +44,7 @@ public class SpeechFoodActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_speech_food);
+        EventBus.getDefault().register(this);
         StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
 
         recordTitle = findViewById(R.id.record_title);
@@ -60,18 +67,6 @@ public class SpeechFoodActivity extends Activity {
                 Log.i(TAG, "Final result received: " + s);
                 recordingResult.append(",");
                 recordingResult.append(s);
-                // if record has been stopped
-                if (!isRecording) {
-                    // use comma to split recording result.
-                    SpeechFoodActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent(SpeechFoodActivity.this, SpeechFoodResultActivity.class);
-                            intent.putExtra("ingredients", recordingResult.toString());
-                            startActivity(intent);
-                        }
-                    });
-                }
             });
         } catch (Exception ex) {
             Log.e("SpeechSDKDemo", "unexpected " + ex.getMessage());
@@ -90,6 +85,19 @@ public class SpeechFoodActivity extends Activity {
             analyzeSpeech.setVisibility(View.VISIBLE);
             recordLottie.cancelAnimation();
             recordLottie.setVisibility(View.GONE);
+
+            // wait for collecting recording data
+            new Handler().postDelayed(() -> {
+                SpeechFoodActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(SpeechFoodActivity.this, SpeechFoodResultActivity.class);
+                        intent.putExtra("ingredients", recordingResult.toString());
+                        startActivity(intent);
+                    }
+                });
+            }, 2000);
+
         } else {
             recordingResult = new StringBuilder();
             isRecording = true;
@@ -100,9 +108,16 @@ public class SpeechFoodActivity extends Activity {
             recordLottie.playAnimation();
             recordLottie.loop(true);
         }
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(FinishActivityEvent event) {
+        finish();
+    }
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

@@ -58,6 +58,7 @@ public class DrugDetailActivity extends Activity {
 
     private String drugNameString, descriptionString, imageUrl, upc;
     private DrugDetail drugDetail;
+    private boolean isFromOnboarding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +79,7 @@ public class DrugDetailActivity extends Activity {
         descriptionString = intent.getStringExtra("drugDescription");
         imageUrl = intent.getStringExtra("drugImage");
         upc = intent.getStringExtra("upc");
+        isFromOnboarding = intent.getBooleanExtra(Configs.ifFromOnBoarding, false);
 
         drugDescription = findViewById(R.id.description_content);
         int width = UIUtils.getWidth(this) - UIUtils.dp2px(this, 72);
@@ -103,14 +105,14 @@ public class DrugDetailActivity extends Activity {
 
         back = findViewById(R.id.back);
         back.setOnClickListener(v -> {
-            finish();
+            if (isFromOnboarding) {
+                startActivity(new Intent(DrugDetailActivity.this, MainActivity.class));
+            } else {
+                finish();
+            }
         });
 
         disclaimer = findViewById(R.id.disclaimer);
-        String disclaimerText = getResources().getString(R.string.disclaimer);
-        SpannableString span = new SpannableString(disclaimerText);
-        span.setSpan(new StyleSpan(Typeface.BOLD), 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        disclaimer.setText(span);
 
         requestDrugDetail();
 
@@ -135,28 +137,34 @@ public class DrugDetailActivity extends Activity {
                         loadingView.setVisibility(View.GONE);
                         DrugDetailActivity.this.drugDetail = drugDetail;
 
-                        if (drugDetail.getDrugDetailContent().isDrugListEmpty()) {
+                        if (drugDetail.isDrugListEmpty()) {
                             noDrugView.setVisibility(View.VISIBLE);
                         } else {
                             noDrugView.setVisibility(View.GONE);
                         }
 
-                        if (drugDetail.getDrugDetailContent().getDrugInteractions().isEmpty()) {
+                        if (drugDetail.getDrugInteractions().isEmpty()) {
                             noInteractionView.setVisibility(View.VISIBLE);
-                            drugInteractionView.setVisibility(View.GONE);
+                            interactionList.setVisibility(View.GONE);
                         } else {
                             noInteractionView.setVisibility(View.GONE);
-                            drugInteractionView.setVisibility(View.VISIBLE);
-                        }
+                            interactionList.setVisibility(View.VISIBLE);
 
-                        interactionList = findViewById(R.id.drug_interaction_list);
-                        interactionList.setLayoutManager(new LinearLayoutManager(DrugDetailActivity.this, LinearLayoutManager.VERTICAL, false));
-                        interactionAdapter = new DrugInteractionAdapter(drugDetail.getDrugDetailContent().getDrugInteractions());
-                        interactionList.setAdapter(interactionAdapter);
+                            // show disclaimer
+                            String disclaimerText = getResources().getString(R.string.disclaimer);
+                            SpannableString span = new SpannableString(disclaimerText);
+                            span.setSpan(new StyleSpan(Typeface.BOLD), 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                            disclaimer.setText(span);
+
+                            interactionList = findViewById(R.id.drug_interaction_list);
+                            interactionList.setLayoutManager(new LinearLayoutManager(DrugDetailActivity.this, LinearLayoutManager.VERTICAL, false));
+                            interactionAdapter = new DrugInteractionAdapter(drugDetail.getDrugInteractions());
+                            interactionList.setAdapter(interactionAdapter);
+                        }
 
                         addToListImage = findViewById(R.id.add_to_list_top);
                         addToList = findViewById(R.id.add_to_list);
-                        if (drugDetail.getDrugDetailContent().isInList()) {
+                        if (drugDetail.isInList()) {
                             addToList.setVisibility(View.GONE);
                             addToListImage.setVisibility(View.GONE);
                         } else {
@@ -198,12 +206,9 @@ public class DrugDetailActivity extends Activity {
             result.append(interaction.getDrugName());
             result.append(".");
             result.append(interaction.getInteractionDesc());
-            result.append("The interaction may cause the following side effects");
-
-            for (SideEffectPossibility possibility : interaction.getPossibilities()) {
-                result.append(possibility.getSideEffectName());
-                result.append(possibility.getPossibility());
-            }
+            result.append("The interaction probability is ");
+            result.append(interaction.getProbability());
+            result.append("%");
         }
         return result.toString();
     }
@@ -260,7 +265,7 @@ public class DrugDetailActivity extends Activity {
         } else if (noDrugView.getVisibility() == View.VISIBLE) {
             SpeechUtil.speechText(DrugDetailActivity.this, this.getResources().getString(R.string.interaction_no_drug));
         } else {
-            SpeechUtil.speechText(DrugDetailActivity.this, generateInteractionText(drugDetail.getDrugDetailContent().getDrugInteractions()));
+            SpeechUtil.speechText(DrugDetailActivity.this, generateInteractionText(drugDetail.getDrugInteractions()));
         }
     }
 

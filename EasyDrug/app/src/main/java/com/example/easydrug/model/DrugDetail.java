@@ -3,6 +3,7 @@ package com.example.easydrug.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class DrugDetail implements Serializable {
     @SerializedName("code")
@@ -11,8 +12,17 @@ public class DrugDetail implements Serializable {
     @SerializedName("msg")
     String msg;
 
-    @SerializedName("drug_detail")
-    DrugDetailContent drugDetailContent;
+    @SerializedName("drug_list_empty")
+    boolean drugListEmpty;
+
+    @SerializedName("is_in_list")
+    boolean isInList;
+
+    @SerializedName("cur_drug_side_effect")
+    String curDrugSideEffect;
+
+    @SerializedName("drug_interactions")
+    ArrayList<DrugInteraction> drugInteractions;
 
     public int getCode() {
         return code;
@@ -30,11 +40,27 @@ public class DrugDetail implements Serializable {
         this.msg = msg;
     }
 
-    public DrugDetailContent getDrugDetailContent() {
-        return drugDetailContent;
+    public boolean isDrugListEmpty() {
+        return drugListEmpty;
     }
 
-    public void setDrugDetailContent(DrugDetailContent drugDetailContent) {
-        this.drugDetailContent = drugDetailContent;
+    public void setDrugListEmpty(boolean drugListEmpty) {
+        this.drugListEmpty = drugListEmpty;
+    }
+
+    public boolean isInList() {
+        return isInList;
+    }
+
+    public void setInList(boolean inList) {
+        isInList = inList;
+    }
+
+    public ArrayList<DrugInteraction> getDrugInteractions() {
+        return drugInteractions;
+    }
+
+    public void setDrugInteractions(ArrayList<DrugInteraction> drugInteractions) {
+        this.drugInteractions = drugInteractions;
     }
 }

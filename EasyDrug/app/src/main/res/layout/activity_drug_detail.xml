@@ -323,6 +323,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:textColor="@color/black"
+                android:visibility="gone"
                 android:textSize="18sp"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -366,6 +367,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
             android:src="@drawable/back"/>
 
         <TextView
