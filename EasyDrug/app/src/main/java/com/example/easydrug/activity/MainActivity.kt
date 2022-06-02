@@ -60,7 +60,6 @@ class MainActivity : FragmentActivity() {
         learnCl = findViewById(R.id.learn_cl)
 
         learnCl?.setOnClickListener {
-            startActivity(Intent(this@MainActivity, DefinitionActivity::class.java))
         }
 
         scanCl?.setOnClickListener {

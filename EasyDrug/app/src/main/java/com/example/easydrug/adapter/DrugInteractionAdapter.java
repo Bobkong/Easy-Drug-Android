@@ -1,5 +1,6 @@
 package com.example.easydrug.adapter;
 
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 public class DrugInteractionAdapter extends RecyclerView.Adapter<InteractionViewHolder> {
 
     private ArrayList<DrugInteraction> mData;
+    private Activity activity;
     @NonNull
     @Override
     public InteractionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -23,13 +25,14 @@ public class DrugInteractionAdapter extends RecyclerView.Adapter<InteractionView
         return new InteractionViewHolder(v);
     }
 
-    public DrugInteractionAdapter(ArrayList<DrugInteraction> data) {
+    public DrugInteractionAdapter(ArrayList<DrugInteraction> data, Activity activity) {
         this.mData = data;
+        this.activity = activity;
     }
 
     @Override
     public void onBindViewHolder(@NonNull InteractionViewHolder holder, int position) {
-        holder.setData(mData.get(position));
+        holder.setData(mData.get(position), activity);
     }
 
     @Override

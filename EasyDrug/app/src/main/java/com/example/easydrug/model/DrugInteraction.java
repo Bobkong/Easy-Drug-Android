@@ -14,7 +14,7 @@ public class DrugInteraction implements Serializable {
     String interactionDesc;
 
     @SerializedName("probability")
-    int probability;
+    String probability;
 
     public String getDrugName() {
         return drugName;
@@ -32,11 +32,17 @@ public class DrugInteraction implements Serializable {
         this.interactionDesc = interactionDesc;
     }
 
-    public int getProbability() {
+    public String getProbability() {
         return probability;
     }
 
-    public void setProbability(int probability) {
+    public void setProbability(String probability) {
+        this.probability = probability;
+    }
+
+    public DrugInteraction(String drugName, String interactionDesc, String probability) {
+        this.drugName = drugName;
+        this.interactionDesc = interactionDesc;
         this.probability = probability;
     }
 }

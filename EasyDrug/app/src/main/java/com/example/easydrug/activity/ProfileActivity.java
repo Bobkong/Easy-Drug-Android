@@ -142,6 +142,7 @@ public class ProfileActivity extends Activity {
                 // do nothing
             }, () -> {
                 // delete profile & go to login
+
                 FileUtil.deleteSPString(ProfileActivity.this, Configs.userNameKey);
                 FileUtil.deleteSPString(ProfileActivity.this, Configs.passwordKey);
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));

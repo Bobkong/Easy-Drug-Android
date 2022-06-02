@@ -19,7 +19,7 @@ public class DrugDetail implements Serializable {
     boolean isInList;
 
     @SerializedName("cur_drug_side_effect")
-    String curDrugSideEffect;
+    ArrayList<SideEffectPossibility> curDrugSideEffect;
 
     @SerializedName("drug_interactions")
     ArrayList<DrugInteraction> drugInteractions;
@@ -62,5 +62,13 @@ public class DrugDetail implements Serializable {
 
     public void setDrugInteractions(ArrayList<DrugInteraction> drugInteractions) {
         this.drugInteractions = drugInteractions;
+    }
+
+    public ArrayList<SideEffectPossibility> getCurDrugSideEffect() {
+        return curDrugSideEffect;
+    }
+
+    public void setCurDrugSideEffect(ArrayList<SideEffectPossibility> curDrugSideEffect) {
+        this.curDrugSideEffect = curDrugSideEffect;
     }
 }

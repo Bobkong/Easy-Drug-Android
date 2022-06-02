@@ -28,22 +28,13 @@ public class DefinitionActivity extends Activity {
 
         definitionList = findViewById(R.id.definition_list);
 
-        //mData = (ArrayList<SideEffectPossibility>) getIntent().getSerializableExtra("possibilities");
-        mData = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            SideEffectPossibility possibility = new SideEffectPossibility("Asthenia", "The quality or state of lacking physical strength or vigor");
-            mData.add(possibility);
+        mData = (ArrayList<SideEffectPossibility>) getIntent().getSerializableExtra("possibilities");
+
+        if (mData != null && !mData.isEmpty()) {
+            definitionList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+            mAdapter = new DefinitionAdapter(mData, this);
+            definitionList.setAdapter(mAdapter);
         }
-
-        for (int i = 0; i < 5; i++) {
-            SideEffectPossibility possibility = new SideEffectPossibility("Asthenia", "xxxxxxxxxxxxxxxxxxx");
-            mData.add(possibility);
-        }
-
-
-        definitionList.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        mAdapter = new DefinitionAdapter(mData, this);
-        definitionList.setAdapter(mAdapter);
 
     }
 

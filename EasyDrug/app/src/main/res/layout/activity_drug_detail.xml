@@ -314,11 +314,61 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/side_effect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="24dp"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@+id/drug_interaction"
+                android:background="@drawable/white_bg">
+
+                <TextView
+                    android:id="@+id/side_effect_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Side Effects"
+                    android:textColor="@color/theme_color"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="24dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <ImageView
+                    android:id="@+id/side_effect_definition"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/definition_icon"
+                    app:layout_constraintTop_toTopOf="@+id/side_effect_title"
+                    app:layout_constraintBottom_toBottomOf="@+id/side_effect_title"
+                    app:layout_constraintRight_toRightOf="parent"/>
+
+                <TextView
+                    android:id="@+id/side_effect_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/side_effect_title"
+                    />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <TextView
                 android:id="@+id/disclaimer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/drug_interaction"
+                app:layout_constraintTop_toBottomOf="@+id/side_effect"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"

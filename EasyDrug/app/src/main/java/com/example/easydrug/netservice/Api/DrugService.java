@@ -44,8 +44,8 @@ public class DrugService {
                 .subscribeOn(Schedulers.io());
     }
 
-    public Observable<DrugDetail> getDrugDetail(String username, String drugName, String drugDesc) {
-        return drugApi.getDrugDetail(new DrugDetailRequestParam(username, drugName, drugDesc))
+    public Observable<DrugDetail> getDrugDetail(String username, String drugName, String drugDesc, String upcCode) {
+        return drugApi.getDrugDetail(new DrugDetailRequestParam(username, drugName, drugDesc, upcCode))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }

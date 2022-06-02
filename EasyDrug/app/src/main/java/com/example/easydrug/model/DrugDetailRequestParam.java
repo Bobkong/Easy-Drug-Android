@@ -14,9 +14,13 @@ public class DrugDetailRequestParam implements Serializable {
     @SerializedName("drug_desc")
     String drugDesc;
 
-    public DrugDetailRequestParam(String userName, String currDrug, String drugDesc) {
+    @SerializedName("upc_code")
+    String upcCode;
+
+    public DrugDetailRequestParam(String userName, String currDrug, String drugDesc, String upcCode) {
         this.userName = userName;
         this.currDrug = currDrug;
         this.drugDesc = drugDesc;
+        this.upcCode = upcCode;
     }
 }

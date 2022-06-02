@@ -14,4 +14,7 @@
     <color name="transparent">#00000000</color>
     <color name="orange">#FFE8C6</color>
     <color name="red">#D33525</color>
+    <color name="possibility_30_70">#F9B043</color>
+    <color name="possibility_30">#00DF16</color>
+    <color name="possibility_curve">#DEE4EA</color>
 </resources>

@@ -52,9 +52,11 @@ public class DrugDetailActivity extends Activity {
     private ImageView drugImage;
     private TextView disclaimer;
     private ImageView descriptionSpeaker, interactionSpeaker;
-    private ConstraintLayout noDrugView, drugInteractionView, noInteractionView, loadingView, errorView;
+    private ConstraintLayout noDrugView, noInteractionView, loadingView, errorView, sideEffectView;
     private ImageView addToListImage;
     private TextView refresh;
+    private TextView sideEffectText;
+    private ImageView sideEffectDefinition;
 
     private String drugNameString, descriptionString, imageUrl, upc;
     private DrugDetail drugDetail;
@@ -67,10 +69,13 @@ public class DrugDetailActivity extends Activity {
         StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
 
         noDrugView = findViewById(R.id.no_drug_view);
-        drugInteractionView = findViewById(R.id.drug_interaction);
         noInteractionView = findViewById(R.id.no_interaction_view);
         loadingView = findViewById(R.id.loading_view);
         errorView = findViewById(R.id.loading_error_view);
+        sideEffectView = findViewById(R.id.side_effect);
+        sideEffectText = findViewById(R.id.side_effect_detail);
+        sideEffectDefinition = findViewById(R.id.side_effect_definition);
+        interactionList = findViewById(R.id.drug_interaction_list);
         refresh = findViewById(R.id.refresh);
         refresh.setOnClickListener(v -> requestDrugDetail());
 
@@ -122,7 +127,7 @@ public class DrugDetailActivity extends Activity {
         loadingView.setVisibility(View.VISIBLE);
         errorView.setVisibility(View.GONE);
 
-        DrugService.getInstance().getDrugDetail(FileUtil.getSPString(this, Configs.userNameKey), drugNameString, descriptionString)
+        DrugService.getInstance().getDrugDetail(FileUtil.getSPString(this, Configs.userNameKey), drugNameString, descriptionString, upc)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Observer<DrugDetail>() {
                 @Override
@@ -156,10 +161,27 @@ public class DrugDetailActivity extends Activity {
                             span.setSpan(new StyleSpan(Typeface.BOLD), 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                             disclaimer.setText(span);
 
-                            interactionList = findViewById(R.id.drug_interaction_list);
+                            // interactions
+
                             interactionList.setLayoutManager(new LinearLayoutManager(DrugDetailActivity.this, LinearLayoutManager.VERTICAL, false));
-                            interactionAdapter = new DrugInteractionAdapter(drugDetail.getDrugInteractions());
+                            interactionAdapter = new DrugInteractionAdapter(drugDetail.getDrugInteractions(), DrugDetailActivity.this);
                             interactionList.setAdapter(interactionAdapter);
+                        }
+
+                        // side effect
+                        if (drugDetail.getCurDrugSideEffect() == null || drugDetail.getCurDrugSideEffect().isEmpty()) {
+                            sideEffectView.setVisibility(View.GONE);
+                        } else {
+                            sideEffectView.setVisibility(View.VISIBLE);
+                            String sideEffectString = generateSideEffectString(drugDetail.getCurDrugSideEffect());
+                            sideEffectText.setText(sideEffectString);
+                            sideEffectDefinition.setOnClickListener(v -> {
+                                Intent intent = new Intent(DrugDetailActivity.this, DefinitionActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable("possibilities", drugDetail.getCurDrugSideEffect());
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                            });
                         }
 
                         addToListImage = findViewById(R.id.add_to_list_top);
@@ -267,6 +289,23 @@ public class DrugDetailActivity extends Activity {
         } else {
             SpeechUtil.speechText(DrugDetailActivity.this, generateInteractionText(drugDetail.getDrugInteractions()));
         }
+    }
+
+    private String generateSideEffectString(ArrayList<SideEffectPossibility> sideEffectPossibilities) {
+        StringBuilder sideEffectString = new StringBuilder();
+
+        for (int i = 0; i < sideEffectPossibilities.size(); i++) {
+            sideEffectString.append(sideEffectPossibilities.get(i).getSideEffectName());
+            sideEffectString.append("(");
+            sideEffectString.append(sideEffectPossibilities.get(i).getPossibility());
+            sideEffectString.append("%)");
+
+            if (i != sideEffectPossibilities.size() - 1) {
+                sideEffectString.append(",");
+            }
+        }
+
+        return sideEffectString.toString();
     }
 
 }

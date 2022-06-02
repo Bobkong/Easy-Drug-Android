@@ -23,7 +23,9 @@ import com.example.easydrug.Utils.RouteUtil
 import com.example.easydrug.model.DrugLookUpInfo
 import com.example.easydrug.netservice.Api.DrugLookUpService
 import com.githang.statusbar.StatusBarCompat
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 
 class ScanDrugActivity: Activity(), QRCodeView.Delegate {
 
@@ -124,18 +126,32 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
         }
         result?.let {
             DrugLookUpService.getInstance().drugLookUp(it).observeOn(AndroidSchedulers.mainThread())
-                .subscribe { drug ->
-                    if (drug.items != null && drug.items.size != 0) {
-                        // ensure scanning a drug
-                        if (drug.items[0].category.startsWith("Health")) {
-                            gotoDrugDetail(drug, it)
-                        } else {
-                            hideSuccessScan()
-                            Toast.makeText(this, "Please scan a drug", Toast.LENGTH_SHORT).show()
-                        }
-
+                .subscribe(object: Observer<DrugLookUpInfo> {
+                    override fun onSubscribe(d: Disposable?) {
                     }
-                }
+
+                    override fun onNext(value: DrugLookUpInfo?) {
+                        if (value?.items != null && value.items.size != 0) {
+                            // ensure scanning a drug
+                            if (value.items[0].category.startsWith("Health")) {
+                                gotoDrugDetail(value, it)
+                            } else {
+                                hideSuccessScan()
+                                Toast.makeText(this@ScanDrugActivity, "Please scan a drug", Toast.LENGTH_SHORT).show()
+                            }
+
+                        }
+                    }
+
+                    override fun onError(e: Throwable?) {
+                        hideSuccessScan()
+                        Toast.makeText(this@ScanDrugActivity, e?.message, Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onComplete() {
+                    }
+
+               })
         }
     }
 

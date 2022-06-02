@@ -13,7 +13,7 @@ public class FoodInteraction implements Serializable {
     String interactionDesc;
 
     @SerializedName("probability")
-    int probability;
+    String probability;
 
     public String getFoodName() {
         return foodName;
@@ -31,11 +31,11 @@ public class FoodInteraction implements Serializable {
         this.interactionDesc = interactionDesc;
     }
 
-    public int getProbability() {
+    public String getProbability() {
         return probability;
     }
 
-    public void setProbability(int probability) {
+    public void setProbability(String probability) {
         this.probability = probability;
     }
 }
