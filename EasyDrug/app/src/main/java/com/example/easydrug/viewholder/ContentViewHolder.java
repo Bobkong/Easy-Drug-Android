@@ -58,6 +58,8 @@ public class ContentViewHolder extends RecyclerView.ViewHolder {
     }
 
 
+
+
 //    public String getIngredientName() {
 ////        return tagName.getText().toString();
 //    }
