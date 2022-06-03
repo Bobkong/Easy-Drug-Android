@@ -90,8 +90,11 @@ public class SpeechFoodResultActivity extends Activity {
         flexboxLayoutManager.setFlexDirection(FlexDirection.ROW);
         flexboxLayoutManager.setFlexWrap(FlexWrap.WRAP);
         flexboxLayoutManager.setJustifyContent(JustifyContent.FLEX_START);
+        // 1 Recycle View set LayoutManager
         ingredientsView.setLayoutManager(flexboxLayoutManager);
+        // 2 create an apapter includes all viewHolders
         adapter = new IngredientAdapter(mData, this);
+        // 3 assign adapter to recycle view
         ingredientsView.setAdapter(adapter);
 
     }

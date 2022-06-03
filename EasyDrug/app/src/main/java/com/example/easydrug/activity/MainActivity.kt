@@ -38,6 +38,7 @@ class MainActivity : FragmentActivity() {
     private var learnCl:ConstraintLayout? = null
     private var editInfo: TextView? = null
     private var helloText: TextView? = null
+    private var explore: ConstraintLayout? = null
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +60,8 @@ class MainActivity : FragmentActivity() {
         setFeatureWidth(drugListCl)
         learnCl = findViewById(R.id.learn_cl)
 
+
+
         learnCl?.setOnClickListener {
         }
 
@@ -68,6 +71,10 @@ class MainActivity : FragmentActivity() {
 
         foodCl?.setOnClickListener {
             startActivity(Intent(this, SpeechFoodActivity::class.java))
+        }
+
+        exploreCl?.setOnClickListener {
+            startActivity(Intent(this, ExploreActivity::class.java))
         }
 
         drugListCl?.setOnClickListener {

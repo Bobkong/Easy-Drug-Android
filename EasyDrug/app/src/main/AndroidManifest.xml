@@ -49,7 +49,7 @@
         <activity android:name=".activity.ProfileActivity" />
         <activity android:name=".activity.DefinitionActivity"/>
         <activity android:name=".activity.FoodInteractionActivity" />
-
+        <activity android:name=".activity.ExploreActivity" />
 
 
     </application>
