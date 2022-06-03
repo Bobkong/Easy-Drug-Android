@@ -23,7 +23,6 @@ public class TagViewHolder extends RecyclerView.ViewHolder{
 
     public TagViewHolder(@NonNull View itemView) {
         super(itemView);
-//        tagName = itemView.findViewById(R.id.tag_name);
         title = itemView.findViewById(R.id.tag_name);
     }
 

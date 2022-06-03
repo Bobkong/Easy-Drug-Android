@@ -26,9 +26,9 @@ public class EasyDrugServiceManager {
     //连接超时
     private static final int CONNECT_TIMEOUT=30;
     //读超时
-    private static final int READ_TIMEOUT=10;
+    private static final int READ_TIMEOUT=30;
     //写超时
-    private static final int WRITE_TIMEOUT=10;
+    private static final int WRITE_TIMEOUT=30;
     //缓存目录
     private static final String CACHE_Dir="TempCache";
     //缓存大小为50M

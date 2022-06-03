@@ -67,6 +67,7 @@ public class SpeechUtil {
     // when exit activity
     public static void destroy() {
         if (synthesizer != null) {
+            synthesizer.StopSpeakingAsync();
             synthesizer.close();
             synthesizer = null;
         }

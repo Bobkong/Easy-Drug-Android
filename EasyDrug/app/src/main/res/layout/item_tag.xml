@@ -11,19 +11,16 @@
         android:layout_height="wrap_content"
         android:background="@drawable/orange_bg"
         android:paddingLeft="16dp"
-        android:paddingTop="3dp"
+        android:paddingTop="5dp"
         android:paddingRight="16dp"
-        android:paddingBottom="3dp"
-        android:text="Article"
+        android:paddingBottom="5dp"
         android:textColor="@color/black"
         android:textSize="16sp"
+        android:includeFontPadding="false"
         android:layout_marginLeft="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -35,7 +35,7 @@ public class InteractionViewHolder extends RecyclerView.ViewHolder {
         drugName.setText(interaction.getDrugName());
         description.setText(interaction.getInteractionDesc());
         possibility.setText(interaction.getProbability());
-        int possibilityValue = Integer.parseInt(interaction.getProbability().replace("%", ""));
+        int possibilityValue = (int) Float.parseFloat(interaction.getProbability().replace("%", ""));
         meterView.getDataManager().setRate(50);
         meterView.getDataManager().setSourceCurveColor(activity.getResources().getColor(getPossibilityColor(possibilityValue)));
         meterView.getDataManager().setPointColor(activity.getResources().getColor(getPossibilityColor(possibilityValue)));

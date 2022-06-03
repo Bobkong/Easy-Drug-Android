@@ -34,7 +34,7 @@ public class DrugService {
     }
 
     public Observable<GeneralResponse> addDrug(String username, String drugName, String drugImageUrl, String drugUpcCode, String drugDesc){
-        return drugApi.addDrug(new DrugInfo(username, drugName, drugImageUrl, drugUpcCode, drugDesc))
+        return drugApi.addDrug(new DrugInfo(username, drugName, drugImageUrl == null ? "" : drugImageUrl, drugUpcCode, drugDesc))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }

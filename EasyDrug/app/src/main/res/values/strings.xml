@@ -15,4 +15,5 @@
     <string name="interaction_loading">Loading drug interactions, please wait!</string>
     <string name="interaction_no_drug">No drugs in list</string>
     <string name="interaction_not_detected">No interactions detected!</string>
+    <string name="view_drug_list">View drug list</string>
 </resources>

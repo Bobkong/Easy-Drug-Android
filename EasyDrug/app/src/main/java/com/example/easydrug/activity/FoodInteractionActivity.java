@@ -22,6 +22,7 @@ import com.example.easydrug.Configs;
 import com.example.easydrug.R;
 import com.example.easydrug.Utils.FileUtil;
 import com.example.easydrug.Utils.FinishActivityEvent;
+import com.example.easydrug.Utils.SpeechUtil;
 import com.example.easydrug.adapter.FoodInteractionAdapter;
 import com.example.easydrug.model.FoodInteractionDetail;
 import com.example.easydrug.netservice.Api.DrugService;
@@ -105,17 +106,23 @@ public class FoodInteractionActivity extends Activity {
                                 noInteractionView.setVisibility(View.VISIBLE);
                                 checkAgain.setVisibility(View.VISIBLE);
                             } else {
-                                // has interactions
-                                interactionList.setVisibility(View.VISIBLE);
-                                interactionList.setLayoutManager(new LinearLayoutManager(FoodInteractionActivity.this, RecyclerView.VERTICAL, false));
-                                adapter = new FoodInteractionAdapter(FoodInteractionActivity.this, value.getInteractions());
-                                interactionList.setAdapter(adapter);
+                                try {
+                                    // has interactions
+                                    interactionList.setVisibility(View.VISIBLE);
+                                    interactionList.setLayoutManager(new LinearLayoutManager(FoodInteractionActivity.this, RecyclerView.VERTICAL, false));
+                                    adapter = new FoodInteractionAdapter(FoodInteractionActivity.this, value.getInteractions());
+                                    interactionList.setAdapter(adapter);
 
-                                // set disclaimer
-                                String disclaimerText = getResources().getString(R.string.disclaimer);
-                                SpannableString span = new SpannableString(disclaimerText);
-                                span.setSpan(new StyleSpan(Typeface.BOLD), 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                                disclaimer.setText(span);
+                                    // set disclaimer
+                                    String disclaimerText = getResources().getString(R.string.disclaimer);
+                                    SpannableString span = new SpannableString(disclaimerText);
+                                    span.setSpan(new StyleSpan(Typeface.BOLD), 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                    disclaimer.setText(span);
+                                    disclaimer.setVisibility(View.VISIBLE);
+                                } catch (Throwable e) {
+                                    Log.e(TAG, e.getMessage());
+                                }
+
                             }
 
                         } else {
@@ -138,5 +145,11 @@ public class FoodInteractionActivity extends Activity {
 
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SpeechUtil.destroy();
     }
 }

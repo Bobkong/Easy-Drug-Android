@@ -108,6 +108,7 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
         mChoosePic?.visibility = View.GONE
         mSuccessImage?.visibility = View.VISIBLE
         mZBarView?.hiddenScanRect()
+        mZBarView?.stopSpot()
     }
 
     private fun hideSuccessScan() {
@@ -115,11 +116,12 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
         mChoosePic?.visibility = View.VISIBLE
         mSuccessImage?.visibility = View.GONE
         mZBarView?.showScanRect()
+        mZBarView?.startSpot()
     }
 
     override fun onScanQRCodeSuccess(result: String?) {
         vibrate()
-        mZBarView?.stopSpot()
+
         showSuccessScan()
         if (result == null) {
             Toast.makeText(this, "Please make sure the barcode is big enough and in the center of the picture.", Toast.LENGTH_SHORT).show();
@@ -140,6 +142,9 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
                                 Toast.makeText(this@ScanDrugActivity, "Please scan a drug", Toast.LENGTH_SHORT).show()
                             }
 
+                        } else {
+                            hideSuccessScan()
+                            Toast.makeText(this@ScanDrugActivity, "No drug searched!", Toast.LENGTH_SHORT).show()
                         }
                     }
 
@@ -157,7 +162,11 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
 
     private fun gotoDrugDetail(drug: DrugLookUpInfo, upc: String) {
         // go to drug detail screen
-        RouteUtil.gotoDrugDetailScreen(this@ScanDrugActivity, ifFromOnBoarding, drug.items[0]?.title, drug.items[0]?.description, drug.items[0]?.images?.get(0), upc)
+        var imageUrl: String? = null
+        if (drug.items[0]?.images != null && drug.items[0]?.images?.isNotEmpty() == true) {
+            imageUrl = drug.items[0]?.images?.get(0)
+        }
+        RouteUtil.gotoDrugDetailScreen(this@ScanDrugActivity, ifFromOnBoarding, drug.items[0]?.title, drug.items[0]?.description, imageUrl, upc)
         finish()
     }
 

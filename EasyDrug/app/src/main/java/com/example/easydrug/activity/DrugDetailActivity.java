@@ -31,7 +31,9 @@ import com.example.easydrug.model.GeneralResponse;
 import com.example.easydrug.model.SideEffectPossibility;
 import com.example.easydrug.netservice.Api.DrugService;
 import com.example.easydrug.widget.ExpandTextView;
+import com.example.easydrug.widget.OnConfirmListener;
 import com.example.easydrug.widget.OneButtonDialog;
+import com.example.easydrug.widget.TwoButtonDialog;
 import com.githang.statusbar.StatusBarCompat;
 
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class DrugDetailActivity extends Activity {
     private TextView refresh;
     private TextView sideEffectText;
     private ImageView sideEffectDefinition;
+    private TextView addToListText;
 
     private String drugNameString, descriptionString, imageUrl, upc;
     private DrugDetail drugDetail;
@@ -76,6 +79,11 @@ public class DrugDetailActivity extends Activity {
         sideEffectText = findViewById(R.id.side_effect_detail);
         sideEffectDefinition = findViewById(R.id.side_effect_definition);
         interactionList = findViewById(R.id.drug_interaction_list);
+        addToListImage = findViewById(R.id.add_to_list_top);
+        addToList = findViewById(R.id.add_to_list);
+        addToList.setOnClickListener(addToListListener);
+        addToListText = findViewById(R.id.add_to_list_text);
+        addToListImage.setOnClickListener(addToListListener);
         refresh = findViewById(R.id.refresh);
         refresh.setOnClickListener(v -> requestDrugDetail());
 
@@ -106,7 +114,7 @@ public class DrugDetailActivity extends Activity {
         drugName.setText(drugNameString);
 
         drugImage = findViewById(R.id.drug_image);
-        Glide.with(this).load(imageUrl).into(drugImage);
+        Glide.with(this).load(imageUrl).placeholder(R.drawable.drug_img_placeholder).into(drugImage);
 
         back = findViewById(R.id.back);
         back.setOnClickListener(v -> {
@@ -146,26 +154,25 @@ public class DrugDetailActivity extends Activity {
                             noDrugView.setVisibility(View.VISIBLE);
                         } else {
                             noDrugView.setVisibility(View.GONE);
-                        }
+                            if (drugDetail.getDrugInteractions().isEmpty()) {
+                                noInteractionView.setVisibility(View.VISIBLE);
+                                interactionList.setVisibility(View.GONE);
+                            } else {
+                                noInteractionView.setVisibility(View.GONE);
+                                interactionList.setVisibility(View.VISIBLE);
 
-                        if (drugDetail.getDrugInteractions().isEmpty()) {
-                            noInteractionView.setVisibility(View.VISIBLE);
-                            interactionList.setVisibility(View.GONE);
-                        } else {
-                            noInteractionView.setVisibility(View.GONE);
-                            interactionList.setVisibility(View.VISIBLE);
+                                // show disclaimer
+                                String disclaimerText = getResources().getString(R.string.disclaimer);
+                                SpannableString span = new SpannableString(disclaimerText);
+                                span.setSpan(new StyleSpan(Typeface.BOLD), 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                                disclaimer.setText(span);
 
-                            // show disclaimer
-                            String disclaimerText = getResources().getString(R.string.disclaimer);
-                            SpannableString span = new SpannableString(disclaimerText);
-                            span.setSpan(new StyleSpan(Typeface.BOLD), 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                            disclaimer.setText(span);
+                                // interactions
 
-                            // interactions
-
-                            interactionList.setLayoutManager(new LinearLayoutManager(DrugDetailActivity.this, LinearLayoutManager.VERTICAL, false));
-                            interactionAdapter = new DrugInteractionAdapter(drugDetail.getDrugInteractions(), DrugDetailActivity.this);
-                            interactionList.setAdapter(interactionAdapter);
+                                interactionList.setLayoutManager(new LinearLayoutManager(DrugDetailActivity.this, LinearLayoutManager.VERTICAL, false));
+                                interactionAdapter = new DrugInteractionAdapter(drugDetail.getDrugInteractions(), DrugDetailActivity.this);
+                                interactionList.setAdapter(interactionAdapter);
+                            }
                         }
 
                         // side effect
@@ -184,14 +191,11 @@ public class DrugDetailActivity extends Activity {
                             });
                         }
 
-                        addToListImage = findViewById(R.id.add_to_list_top);
-                        addToList = findViewById(R.id.add_to_list);
+
                         if (drugDetail.isInList()) {
-                            addToList.setVisibility(View.GONE);
                             addToListImage.setVisibility(View.GONE);
-                        } else {
-                            addToList.setOnClickListener(addToListListener);
-                            addToListImage.setOnClickListener(addToListListener);
+                            addToListText.setText(R.string.view_drug_list);
+                            addToList.setOnClickListener(v -> gotoDrugList());
                         }
                     } else {
                         errorView.setVisibility(View.VISIBLE);
@@ -221,18 +225,22 @@ public class DrugDetailActivity extends Activity {
         SpeechUtil.destroy();
     }
 
-    private String generateInteractionText(ArrayList<DrugInteraction> interactions) {
+    public static String generateInteractionText(ArrayList<DrugInteraction> interactions) {
         StringBuilder result = new StringBuilder();
         for (DrugInteraction interaction : interactions) {
             result.append("Interact with");
             result.append(interaction.getDrugName());
-            result.append(".");
-            result.append(interaction.getInteractionDesc());
             result.append("The interaction probability is ");
             result.append(interaction.getProbability());
             result.append("%");
+            result.append(".");
+            result.append(interaction.getInteractionDesc());
         }
         return result.toString();
+    }
+
+    private void gotoDrugList() {
+        // todo go to drug list screen
     }
 
     private final View.OnClickListener addToListListener = v -> {
@@ -251,16 +259,35 @@ public class DrugDetailActivity extends Activity {
                         if (value.getCode() == Configs.requestSuccess) {
                             statusRes = R.drawable.dialog_correct;
                             dialogTitle = "Successfully added to list!";
+                            String rightButtonText = isFromOnboarding ? "Next" : "View List";
+                            new TwoButtonDialog(DrugDetailActivity.this, () -> {
+                                // do nothing
+                            }, () -> {
+                                if (isFromOnboarding) {
+                                    startActivity(new Intent(DrugDetailActivity.this, CheckListActivity.class));
+                                } else {
+                                    gotoDrugList();
+                                }
+                            }).setTitle(dialogTitle)
+                            .setStatusImgRes(statusRes)
+                            .setLeftButtonBg(R.drawable.grey_color_stroke_bg_8dp)
+                            .setLeftButtonText("Cancel")
+                            .setLeftButtonTextColor(R.color.grey)
+                            .setLeftButtonBg(R.drawable.theme_color_bg_8dp)
+                            .setLeftButtonText(rightButtonText)
+                            .setLeftButtonTextColor(R.color.white)
+                            .show();
                         } else {
                             statusRes = R.drawable.dialog_error;
                             dialogTitle = value.getMsg();
-                        }
-                        new OneButtonDialog(DrugDetailActivity.this, () -> {
-                            // todo go to drug list screen
+                            new OneButtonDialog(DrugDetailActivity.this, () -> {
+                                gotoDrugList();
 
-                        }).setTitle(dialogTitle)
-                                .setStatusImgRes(statusRes)
-                                .show();
+                            }).setTitle(dialogTitle)
+                                    .setStatusImgRes(statusRes)
+                                    .show();
+                        }
+
                     }
 
                     @Override

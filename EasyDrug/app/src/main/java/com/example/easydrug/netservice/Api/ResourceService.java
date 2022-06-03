@@ -23,6 +23,8 @@ public class ResourceService {
     private final ResourceApi resourceApi= EasyDrugServiceManager.getInstance().create(ResourceApi.class);
 
     public Observable<ResourcesResponse> getResources(){
-        return resourceApi.getResources();
+        return resourceApi.getResources()
+                .onErrorResumeNext(new HttpResultFunc<>())
+                .subscribeOn(Schedulers.io());
     }
 }

@@ -93,6 +93,7 @@ public class SpeechFoodActivity extends Activity {
                     public void run() {
                         Intent intent = new Intent(SpeechFoodActivity.this, SpeechFoodResultActivity.class);
                         intent.putExtra("ingredients", recordingResult.toString());
+                        Log.i(TAG, "go to speech food result activity");
                         startActivity(intent);
                     }
                 });

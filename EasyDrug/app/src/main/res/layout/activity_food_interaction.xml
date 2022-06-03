@@ -55,6 +55,7 @@
             android:layout_marginTop="8dp"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/interactions"
         android:visibility="gone"
@@ -63,19 +64,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="64dp"/>
-
-    <TextView
-        android:id="@+id/disclaimer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/interactions"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/black"
-        android:visibility="gone"
-        android:textSize="18sp"/>
+        android:layout_marginTop="64dp"
+        android:paddingBottom="24dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/check_again"
@@ -178,6 +168,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:gravity="center_vertical"
+        android:background="@color/bg_color"
         tools:ignore="MissingConstraints" >
 
         <ImageView

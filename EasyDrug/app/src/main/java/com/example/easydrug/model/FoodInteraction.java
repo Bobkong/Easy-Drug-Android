@@ -3,17 +3,15 @@ package com.example.easydrug.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class FoodInteraction implements Serializable {
 
-    @SerializedName("other_drug_name")
+    @SerializedName("food_name")
     String foodName;
 
-    @SerializedName("interaction_desc")
-    String interactionDesc;
-
-    @SerializedName("probability")
-    String probability;
+    @SerializedName("drug_interactions")
+    ArrayList<DrugInteraction> drugInteractions;
 
     public String getFoodName() {
         return foodName;
@@ -23,19 +21,11 @@ public class FoodInteraction implements Serializable {
         this.foodName = foodName;
     }
 
-    public String getInteractionDesc() {
-        return interactionDesc;
+    public ArrayList<DrugInteraction> getDrugInteractions() {
+        return drugInteractions;
     }
 
-    public void setInteractionDesc(String interactionDesc) {
-        this.interactionDesc = interactionDesc;
-    }
-
-    public String getProbability() {
-        return probability;
-    }
-
-    public void setProbability(String probability) {
-        this.probability = probability;
+    public void setDrugInteractions(ArrayList<DrugInteraction> drugInteractions) {
+        this.drugInteractions = drugInteractions;
     }
 }
