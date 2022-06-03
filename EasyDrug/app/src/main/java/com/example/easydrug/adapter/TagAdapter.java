@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class TagAdapter extends RecyclerView.Adapter<TagViewHolder>{
     private ArrayList<String> tagData;
     private Activity activity;
+    private int selectedIndex = -1;
     public TagAdapter(ArrayList<String> tagData, Activity activity) {
         this.tagData = tagData;
         this.activity = activity;
@@ -33,7 +34,11 @@ public class TagAdapter extends RecyclerView.Adapter<TagViewHolder>{
     }
     @Override
     public void onBindViewHolder(@NonNull TagViewHolder holder, int position) {
-        holder.setData(tagData.get(position) ,this, position, activity);
+        holder.setData(tagData.get(position) ,this, position, activity, position == selectedIndex);
+    }
+
+    public void setSelectedIndex(int index) {
+        selectedIndex = index;
     }
 
 }

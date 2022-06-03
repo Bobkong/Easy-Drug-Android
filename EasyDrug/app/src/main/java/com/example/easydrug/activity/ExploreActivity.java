@@ -100,4 +100,12 @@ public class ExploreActivity extends Activity {
                     }
                 });
     }
+
+    public void selectTag(String tagName) {
+        contentAdapter.setTag(tagName);
+    }
+
+    public void resetTag() {
+        contentAdapter.resetTag();
+    }
 }

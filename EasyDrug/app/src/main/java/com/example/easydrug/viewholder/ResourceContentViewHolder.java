@@ -1,6 +1,8 @@
 package com.example.easydrug.viewholder;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -58,10 +60,13 @@ public class ResourceContentViewHolder extends RecyclerView.ViewHolder {
 
         contentType.setText(content.getType());
 
-        if (position == adapter.getItemCount() - 1) {
-            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) rootView.getLayoutParams();
-            params.bottomMargin = UIUtils.dp2px(activity, 64f);
-        }
+        rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(content.getSource());
+               activity.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+            }
+        });
     }
 
 }

@@ -14,14 +14,17 @@ import com.example.easydrug.viewholder.ResourceContentViewHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class ContentAdapter extends RecyclerView.Adapter<ResourceContentViewHolder>{
     private Activity activity;
     private ArrayList<ResourcesContent> contentData;
+    private ArrayList<ResourcesContent> totalData;
 
     public ContentAdapter(ArrayList<ResourcesContent> contentData, Activity activity) {
         this.contentData = contentData;
         this.activity = activity;
+        this.totalData = contentData;
     }
 
     @NonNull
@@ -37,5 +40,23 @@ public class ContentAdapter extends RecyclerView.Adapter<ResourceContentViewHold
     @Override
     public void onBindViewHolder(@NonNull ResourceContentViewHolder holder, int position) {
         holder.setData(contentData.get(position), this, position, activity);
+    }
+
+    public void setTag(String tagName) {
+        contentData = new ArrayList<>();
+        contentData.addAll(totalData);
+        for (Iterator<ResourcesContent> iterator = contentData.iterator(); iterator.hasNext(); ) {
+            ResourcesContent value = iterator.next();
+            if (!value.getType().equals(tagName)) {
+                iterator.remove();
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void resetTag() {
+        contentData = new ArrayList<>();
+        contentData.addAll(totalData);
+        notifyDataSetChanged();
     }
 }
