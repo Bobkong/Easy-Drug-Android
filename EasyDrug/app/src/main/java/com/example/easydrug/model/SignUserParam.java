@@ -15,5 +15,9 @@ public class SignUserParam implements Serializable {
 		this.username = username;
 		this.password = password;
 	}
+
+	public SignUserParam(String username) {
+		this.username = username;
+	}
 }
 

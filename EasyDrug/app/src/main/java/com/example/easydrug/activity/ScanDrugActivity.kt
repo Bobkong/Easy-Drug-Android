@@ -35,11 +35,11 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
     private var mChoosePic: LinearLayout? = null
     private var mHintLl: LinearLayout? = null
     private var mSuccessImage: ImageView? = null
-    private var ifFromOnBoarding = false;
+    private var ifFromOnBoarding = RouteUtil.fromOther
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        ifFromOnBoarding = intent.getBooleanExtra(Configs.ifFromOnBoarding, false)
+        ifFromOnBoarding = intent.getIntExtra(Configs.drugDetailFromScene, RouteUtil.fromOther)
         Log.i(TAG, ifFromOnBoarding.toString())
 
 

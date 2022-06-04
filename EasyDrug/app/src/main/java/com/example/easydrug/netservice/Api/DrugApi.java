@@ -19,7 +19,7 @@ public interface DrugApi {
     //sign up
     @POST("/getDrugList")
     Observable<DrugList> getDrugList(
-            @Body SignUserParam params
+            @Body SignUserParam username
     );
 
     //add drug

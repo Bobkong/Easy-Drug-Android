@@ -24,11 +24,11 @@ public class EasyDrugServiceManager {
     //域名
     private static final String baseUrl="http://20.231.217.74:10000";
     //连接超时
-    private static final int CONNECT_TIMEOUT=30;
+    private static final int CONNECT_TIMEOUT=60;
     //读超时
-    private static final int READ_TIMEOUT=30;
+    private static final int READ_TIMEOUT=60;
     //写超时
-    private static final int WRITE_TIMEOUT=30;
+    private static final int WRITE_TIMEOUT=60;
     //缓存目录
     private static final String CACHE_Dir="TempCache";
     //缓存大小为50M

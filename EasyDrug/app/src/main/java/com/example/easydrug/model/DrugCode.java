@@ -9,10 +9,13 @@ public class DrugCode implements Serializable {
     private String userName;
     @SerializedName("drug_upc_code")
     private String drugUpcCode;
+    @SerializedName("curr_drug")
+    private String currDrug;
 
-    public DrugCode(String userName, String drugUpcCode) {
+    public DrugCode(String userName, String drugUpcCode, String currDrug) {
         this.userName = userName;
         this.drugUpcCode = drugUpcCode;
+        this.currDrug = currDrug;
     }
 
     public String getUserName() {

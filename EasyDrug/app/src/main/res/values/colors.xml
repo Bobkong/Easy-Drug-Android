@@ -18,5 +18,6 @@
     <color name="possibility_30">#00DF16</color>
     <color name="possibility_curve">#DEE4EA</color>
     <color name="light_orange">#F56D41</color>
+    <color name="drug_list_interaction_green">#478433</color>
 
 </resources>

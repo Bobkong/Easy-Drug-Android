@@ -20,7 +20,6 @@ import com.example.easydrug.Utils.FileUtil
 import com.example.easydrug.Utils.FinishActivityEvent
 import com.example.easydrug.Utils.UIUtils
 import com.example.easydrug.Utils.UpdateProfileEvent
-import com.example.easydrug.fragment.CustomBottomSheetDialogFragment
 import com.githang.statusbar.StatusBarCompat
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -66,7 +65,7 @@ class MainActivity : FragmentActivity() {
         }
 
         scanCl?.setOnClickListener {
-            CustomBottomSheetDialogFragment().show(supportFragmentManager, "Dialog")
+            startActivity(Intent(this, ScanDrugActivity::class.java))
         }
 
         foodCl?.setOnClickListener {
@@ -78,7 +77,7 @@ class MainActivity : FragmentActivity() {
         }
 
         drugListCl?.setOnClickListener {
-            startActivity(Intent(this, DrugDetailActivity::class.java))
+            startActivity(Intent(this, DrugListActivity::class.java))
         }
 
         editInfo?.setOnClickListener {

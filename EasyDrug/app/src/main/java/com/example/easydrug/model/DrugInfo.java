@@ -3,6 +3,7 @@ package com.example.easydrug.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class DrugInfo implements Serializable {
     @SerializedName("username")
@@ -15,13 +16,19 @@ public class DrugInfo implements Serializable {
     private String drugUpcCode;
     @SerializedName("drug_desc")
     private String drugDesc;
+    @SerializedName("interaction_pairs")
+    ArrayList<ArrayList<String>> interactionPairs;
 
-    public DrugInfo(String userName, String drugName, String drugImageUrl, String drugUpcCode, String drugDesc) {
+    public DrugInfo(String userName, String drugName, String drugImageUrl, String drugUpcCode, String drugDesc, ArrayList<ArrayList<String>> interactionPairs) {
         this.userName = userName;
         this.drugName = drugName;
         this.drugImageUrl = drugImageUrl;
         this.drugUpcCode = drugUpcCode;
         this.drugDesc = drugDesc;
+        if (interactionPairs == null) {
+            interactionPairs = new ArrayList<>();
+        }
+        this.interactionPairs = interactionPairs;
     }
 
     public String getUserName() {

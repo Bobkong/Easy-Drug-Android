@@ -8,14 +8,17 @@ import com.example.easydrug.activity.DrugDetailActivity;
 
 public class RouteUtil {
 
-    public static void gotoDrugDetailScreen(Context context, boolean isFromOnboarding, String drugName, String drugDescription, String drugImageUrl, String upc) {
+    public static int fromOnBoarding = 0;
+    public static int fromDrugList = 1;
+    public static int fromOther = 2;
+    public static void gotoDrugDetailScreen(Context context, int fromScene, String drugName, String drugDescription, String drugImageUrl, String upc) {
         if (context != null && upc != null &&  !upc.isEmpty()) {
             Intent intent = new Intent(context, DrugDetailActivity.class);
             intent.putExtra("drugName", drugName);
             intent.putExtra("drugDescription", drugDescription);
             intent.putExtra("drugImage", drugImageUrl);
             intent.putExtra("upc", upc);
-            intent.putExtra(Configs.ifFromOnBoarding, isFromOnboarding);
+            intent.putExtra(Configs.drugDetailFromScene, fromScene);
             context.startActivity(intent);
         }
 

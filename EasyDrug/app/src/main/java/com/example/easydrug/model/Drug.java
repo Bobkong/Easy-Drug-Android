@@ -13,6 +13,8 @@ public class Drug implements Serializable {
     private String upcCode;
     @SerializedName("drug_desc")
     private String drugDesc;
+    @SerializedName("num_of_interactions")
+    private int numberOfInteractions;
 
     public Drug(String drugImageUrl, String drugName, String upcCode, String drugDesc) {
         this.drugImageUrl = drugImageUrl;
@@ -51,5 +53,13 @@ public class Drug implements Serializable {
 
     public void setDrugDesc(String drugDesc) {
         this.drugDesc = drugDesc;
+    }
+
+    public int getNumberOfInteractions() {
+        return numberOfInteractions;
+    }
+
+    public void setNumberOfInteractions(int numberOfInteractions) {
+        this.numberOfInteractions = numberOfInteractions;
     }
 }

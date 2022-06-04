@@ -64,7 +64,7 @@ public class ResourceContentViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Uri uri = Uri.parse(content.getSource());
-               activity.startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                activity.startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         });
     }

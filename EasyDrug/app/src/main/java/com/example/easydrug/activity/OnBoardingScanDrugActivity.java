@@ -10,6 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.easydrug.Configs;
 import com.example.easydrug.R;
+import com.example.easydrug.Utils.RouteUtil;
 import com.githang.statusbar.StatusBarCompat;
 
 public class OnBoardingScanDrugActivity extends Activity{
@@ -25,9 +26,8 @@ public class OnBoardingScanDrugActivity extends Activity{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(OnBoardingScanDrugActivity.this, ScanDrugActivity.class);
-                intent.putExtra(Configs.ifFromOnBoarding, true);
+                intent.putExtra(Configs.drugDetailFromScene, RouteUtil.fromOnBoarding);
                 startActivity(intent);
-                finish();
             }
         });
     }

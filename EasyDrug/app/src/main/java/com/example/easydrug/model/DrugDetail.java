@@ -24,6 +24,9 @@ public class DrugDetail implements Serializable {
     @SerializedName("drug_interactions")
     ArrayList<DrugInteraction> drugInteractions;
 
+    @SerializedName("interaction_pairs")
+    ArrayList<ArrayList<String>> interactionPairs;
+
     public int getCode() {
         return code;
     }
@@ -70,5 +73,13 @@ public class DrugDetail implements Serializable {
 
     public void setCurDrugSideEffect(ArrayList<SideEffectPossibility> curDrugSideEffect) {
         this.curDrugSideEffect = curDrugSideEffect;
+    }
+
+    public ArrayList<ArrayList<String>> getInteractionPairs() {
+        return interactionPairs;
+    }
+
+    public void setInteractionPairs(ArrayList<ArrayList<String>> interactionPairs) {
+        this.interactionPairs = interactionPairs;
     }
 }

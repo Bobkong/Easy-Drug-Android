@@ -72,4 +72,7 @@ dependencies {
 
     // meter view
     implementation 'com.github.pimaryschoolstudent:MeterView:1.0.1'
+
+    // swipescroll layout
+    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 }

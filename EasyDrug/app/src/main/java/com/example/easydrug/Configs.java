@@ -16,5 +16,5 @@ public interface Configs {
     int requestFail = 1;
 
     // intent extra
-    String ifFromOnBoarding = "ifFromOnBoarding";
+    String drugDetailFromScene = "drugDetailFromScene";
 }

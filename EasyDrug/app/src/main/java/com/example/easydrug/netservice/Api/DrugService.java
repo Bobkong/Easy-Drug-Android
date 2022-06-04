@@ -27,19 +27,19 @@ public class DrugService {
 
     private final DrugApi drugApi= EasyDrugServiceManager.getInstance().create(DrugApi.class);
 
-    public Observable<DrugList> getDrugList(String username, String password){
-        return drugApi.getDrugList(new SignUserParam(username, password))
+    public Observable<DrugList> getDrugList(String username){
+        return drugApi.getDrugList(new SignUserParam(username))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
 
-    public Observable<GeneralResponse> addDrug(String username, String drugName, String drugImageUrl, String drugUpcCode, String drugDesc){
-        return drugApi.addDrug(new DrugInfo(username, drugName, drugImageUrl == null ? "" : drugImageUrl, drugUpcCode, drugDesc))
+    public Observable<GeneralResponse> addDrug(String username, String drugName, String drugImageUrl, String drugUpcCode, String drugDesc, ArrayList<ArrayList<String>> interactionPairs){
+        return drugApi.addDrug(new DrugInfo(username, drugName, drugImageUrl == null ? "" : drugImageUrl, drugUpcCode, drugDesc, interactionPairs))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }
-    public Observable<GeneralResponse> removeDrug(String username, String drugUpcCode){
-        return drugApi.removeDrug(new DrugCode(username, drugUpcCode))
+    public Observable<GeneralResponse> removeDrug(String username, String drugUpcCode, String currDrug){
+        return drugApi.removeDrug(new DrugCode(username, drugUpcCode, currDrug))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }

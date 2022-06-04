@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.easydrug.Configs;
 import com.example.easydrug.R;
 import com.example.easydrug.Utils.FileUtil;
+import com.example.easydrug.Utils.RouteUtil;
 import com.example.easydrug.Utils.SpeechUtil;
 import com.example.easydrug.Utils.UIUtils;
 import com.example.easydrug.adapter.DrugInteractionAdapter;
@@ -31,7 +32,6 @@ import com.example.easydrug.model.GeneralResponse;
 import com.example.easydrug.model.SideEffectPossibility;
 import com.example.easydrug.netservice.Api.DrugService;
 import com.example.easydrug.widget.ExpandTextView;
-import com.example.easydrug.widget.OnConfirmListener;
 import com.example.easydrug.widget.OneButtonDialog;
 import com.example.easydrug.widget.TwoButtonDialog;
 import com.githang.statusbar.StatusBarCompat;
@@ -63,7 +63,7 @@ public class DrugDetailActivity extends Activity {
 
     private String drugNameString, descriptionString, imageUrl, upc;
     private DrugDetail drugDetail;
-    private boolean isFromOnboarding;
+    private int fromScene;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class DrugDetailActivity extends Activity {
         descriptionString = intent.getStringExtra("drugDescription");
         imageUrl = intent.getStringExtra("drugImage");
         upc = intent.getStringExtra("upc");
-        isFromOnboarding = intent.getBooleanExtra(Configs.ifFromOnBoarding, false);
+        fromScene = intent.getIntExtra(Configs.drugDetailFromScene, RouteUtil.fromOther);
 
         drugDescription = findViewById(R.id.description_content);
         int width = UIUtils.getWidth(this) - UIUtils.dp2px(this, 72);
@@ -114,16 +114,22 @@ public class DrugDetailActivity extends Activity {
         drugName.setText(drugNameString);
 
         drugImage = findViewById(R.id.drug_image);
-        Glide.with(this).load(imageUrl).placeholder(R.drawable.drug_img_placeholder).into(drugImage);
+        Glide.with(this).load(imageUrl).fallback(R.drawable.drug_img_placeholder)
+                .error(R.drawable.drug_img_placeholder).into(drugImage);
 
         back = findViewById(R.id.back);
         back.setOnClickListener(v -> {
-            if (isFromOnboarding) {
+            if (fromScene == RouteUtil.fromOnBoarding) {
                 startActivity(new Intent(DrugDetailActivity.this, MainActivity.class));
             } else {
                 finish();
             }
         });
+
+        if (fromScene == RouteUtil.fromDrugList) {
+            addToListImage.setVisibility(View.GONE);
+            addToList.setVisibility(View.GONE);
+        }
 
         disclaimer = findViewById(R.id.disclaimer);
 
@@ -166,10 +172,17 @@ public class DrugDetailActivity extends Activity {
                                 SpannableString span = new SpannableString(disclaimerText);
                                 span.setSpan(new StyleSpan(Typeface.BOLD), 0, 11, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                                 disclaimer.setText(span);
+                                disclaimer.setVisibility(View.VISIBLE);
 
                                 // interactions
 
-                                interactionList.setLayoutManager(new LinearLayoutManager(DrugDetailActivity.this, LinearLayoutManager.VERTICAL, false));
+                                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(DrugDetailActivity.this) {
+                                    @Override
+                                    public boolean canScrollVertically() {
+                                        return false;
+                                    }
+                                };
+                                interactionList.setLayoutManager(linearLayoutManager);
                                 interactionAdapter = new DrugInteractionAdapter(drugDetail.getDrugInteractions(), DrugDetailActivity.this);
                                 interactionList.setAdapter(interactionAdapter);
                             }
@@ -240,11 +253,11 @@ public class DrugDetailActivity extends Activity {
     }
 
     private void gotoDrugList() {
-        // todo go to drug list screen
+        startActivity(new Intent(DrugDetailActivity.this, DrugListActivity.class));
     }
 
     private final View.OnClickListener addToListListener = v -> {
-        DrugService.getInstance().addDrug(FileUtil.getSPString(DrugDetailActivity.this, Configs.userNameKey), drugNameString, imageUrl, upc, descriptionString)
+        DrugService.getInstance().addDrug(FileUtil.getSPString(DrugDetailActivity.this, Configs.userNameKey), drugNameString, imageUrl, upc, descriptionString, drugDetail.getInteractionPairs())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GeneralResponse>() {
                     @Override
@@ -259,11 +272,11 @@ public class DrugDetailActivity extends Activity {
                         if (value.getCode() == Configs.requestSuccess) {
                             statusRes = R.drawable.dialog_correct;
                             dialogTitle = "Successfully added to list!";
-                            String rightButtonText = isFromOnboarding ? "Next" : "View List";
+                            String rightButtonText = fromScene == RouteUtil.fromOnBoarding ? "Next" : "View List";
                             new TwoButtonDialog(DrugDetailActivity.this, () -> {
                                 // do nothing
                             }, () -> {
-                                if (isFromOnboarding) {
+                                if (fromScene == RouteUtil.fromOnBoarding) {
                                     startActivity(new Intent(DrugDetailActivity.this, CheckListActivity.class));
                                 } else {
                                     gotoDrugList();
