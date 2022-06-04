@@ -54,7 +54,7 @@ public class DrugDetailActivity extends Activity {
     private ImageView drugImage;
     private TextView disclaimer;
     private ImageView descriptionSpeaker, interactionSpeaker;
-    private ConstraintLayout noDrugView, noInteractionView, loadingView, errorView, sideEffectView;
+    private ConstraintLayout noDrugView, noInteractionView, loadingView, errorView, sideEffectView, descView;
     private ImageView addToListImage;
     private TextView refresh;
     private TextView sideEffectText;
@@ -86,6 +86,7 @@ public class DrugDetailActivity extends Activity {
         addToListImage.setOnClickListener(addToListListener);
         refresh = findViewById(R.id.refresh);
         refresh.setOnClickListener(v -> requestDrugDetail());
+        descView = findViewById(R.id.drug_desc);
 
         Intent intent = getIntent();
         drugNameString = intent.getStringExtra("drugName");
@@ -95,10 +96,14 @@ public class DrugDetailActivity extends Activity {
         fromScene = intent.getIntExtra(Configs.drugDetailFromScene, RouteUtil.fromOther);
 
         drugDescription = findViewById(R.id.description_content);
-        int width = UIUtils.getWidth(this) - UIUtils.dp2px(this, 72);
-        drugDescription.initWidth(width);
-        drugDescription.setMaxLines(7);
-        drugDescription.setCloseText(descriptionString);
+        if (descriptionString == null || descriptionString.isEmpty()) {
+            descView.setVisibility(View.GONE);
+        } else {
+            int width = UIUtils.getWidth(this) - UIUtils.dp2px(this, 72);
+            drugDescription.initWidth(width);
+            drugDescription.setMaxLines(7);
+            drugDescription.setCloseText(descriptionString);
+        }
 
         descriptionSpeaker = findViewById(R.id.description_speaker);
         descriptionSpeaker.setOnClickListener(v -> {

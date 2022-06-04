@@ -22,9 +22,17 @@ public class DrugInfo implements Serializable {
     public DrugInfo(String userName, String drugName, String drugImageUrl, String drugUpcCode, String drugDesc, ArrayList<ArrayList<String>> interactionPairs) {
         this.userName = userName;
         this.drugName = drugName;
-        this.drugImageUrl = drugImageUrl;
+        if (drugImageUrl == null) {
+            this.drugImageUrl = "";
+        } else {
+            this.drugImageUrl = drugImageUrl;
+        }
         this.drugUpcCode = drugUpcCode;
-        this.drugDesc = drugDesc;
+        if (drugDesc == null) {
+            this.drugDesc = "";
+        } else {
+            this.drugDesc = drugDesc;
+        }
         if (interactionPairs == null) {
             interactionPairs = new ArrayList<>();
         }

@@ -62,6 +62,7 @@ class MainActivity : FragmentActivity() {
 
 
         learnCl?.setOnClickListener {
+            startActivity(Intent(this, ExploreActivity::class.java))
         }
 
         scanCl?.setOnClickListener {
@@ -83,35 +84,10 @@ class MainActivity : FragmentActivity() {
         editInfo?.setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
         }
-//
-//        inputFood?.setOnClickListener {
-//            startActivity(Intent(this, SpeechFoodActivity::class.java))
-//        }
 
-//        SignService.getInstance().signUp("123", "123").observeOn(AndroidSchedulers.mainThread())
-//            .subscribe {
-//                Toast.makeText(this, it.string(), Toast.LENGTH_SHORT).show()
-//            }
-//
-//
-//        DrugService.getInstance().getDrugList("1234", "123").observeOn(AndroidSchedulers.mainThread())
-//            .subscribe {
-//                if (it != null && it.drugList != null && it.drugList.size != 0) {
-//                    Log.i(TAG, it.drugList.size.toString())
-//                } else {
-//                    Log.i(TAG, "drug list is null")
-//                }
-//            }
-//
-//        DrugService.getInstance().addDrug("1234", "xxxx", "abc.com", "001").observeOn(AndroidSchedulers.mainThread())
-//            .subscribe {
-//                Log.i(TAG, it.string())
-//            }
-//
-//        DrugService.getInstance().removeDrug("1234", "001").observeOn(AndroidSchedulers.mainThread())
-//            .subscribe {
-//                Log.i(TAG, it.string())
-//            }
+        userAvatar?.setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
 
     }
 

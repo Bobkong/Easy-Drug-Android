@@ -95,6 +95,7 @@ public class SpeechFoodActivity extends Activity {
                         intent.putExtra("ingredients", recordingResult.toString());
                         Log.i(TAG, "go to speech food result activity");
                         startActivity(intent);
+                        analyzeSpeech.setVisibility(View.GONE);
                     }
                 });
             }, 2000);

@@ -45,10 +45,10 @@ public class SpeechFoodResultActivity extends Activity {
         StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
         ingredientsView = findViewById(R.id.ingredient_recycler_view);
         backButton = findViewById(R.id.back);
-        backButton.setOnClickListener(v -> startActivity(new Intent(SpeechFoodResultActivity.this, SpeechFoodActivity.class)));
+        backButton.setOnClickListener(v -> finish());
 
         reRecord = findViewById(R.id.re_record);
-        reRecord.setOnClickListener(v -> startActivity(new Intent(SpeechFoodResultActivity.this, SpeechFoodActivity.class)));
+        reRecord.setOnClickListener(v -> finish());
 
         confirm = findViewById(R.id.confirm);
         confirm.setOnClickListener(v -> {
