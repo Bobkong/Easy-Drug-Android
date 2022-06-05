@@ -24,7 +24,7 @@ public class DefinitionViewHolder extends RecyclerView.ViewHolder {
         sideEffectDesc = itemView.findViewById(R.id.side_effect_desc);
         speaker = itemView.findViewById(R.id.side_effect_speaker);
         speaker.setOnClickListener(v -> {
-            SpeechUtil.speechText(activity, sideEffectDesc.getText().toString());
+            SpeechUtil.speechText(activity, sideEffectName.getText().toString() + " is " + sideEffectDesc.getText().toString());
         });
     }
 

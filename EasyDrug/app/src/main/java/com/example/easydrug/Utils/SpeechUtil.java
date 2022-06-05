@@ -39,6 +39,7 @@ public class SpeechUtil {
 
         thread = new Thread(() -> {
             try {
+                Thread.sleep(1000);
                 // Note: this will block the UI thread, so eventually, you want to register for the event
                 SpeechSynthesisResult result = synthesizer.SpeakText(text);
                 assert(result != null);
@@ -68,8 +69,20 @@ public class SpeechUtil {
     public static void destroy() {
         if (synthesizer != null) {
             synthesizer.StopSpeakingAsync();
-            synthesizer.close();
-            synthesizer = null;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    synthesizer.close();
+                    synthesizer = null;
+
+                }
+            }).start();
         }
         if (speechConfig != null) {
             speechConfig.close();

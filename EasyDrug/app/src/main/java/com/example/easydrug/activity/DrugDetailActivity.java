@@ -60,6 +60,7 @@ public class DrugDetailActivity extends Activity {
     private TextView sideEffectText;
     private ImageView sideEffectDefinition;
     private TextView addToListText;
+    private TextView addListText;
 
     private String drugNameString, descriptionString, imageUrl, upc;
     private DrugDetail drugDetail;
@@ -87,6 +88,9 @@ public class DrugDetailActivity extends Activity {
         refresh = findViewById(R.id.refresh);
         refresh.setOnClickListener(v -> requestDrugDetail());
         descView = findViewById(R.id.drug_desc);
+        addToListText = findViewById(R.id.no_drug_add_list);
+
+        addToListText.setOnClickListener(addToListListener);
 
         Intent intent = getIntent();
         drugNameString = intent.getStringExtra("drugName");
@@ -289,6 +293,7 @@ public class DrugDetailActivity extends Activity {
                                     startActivity(new Intent(DrugDetailActivity.this, CheckListActivity.class));
                                 } else {
                                     gotoDrugList();
+                                    finish();
                                 }
                             }).setTitle(dialogTitle)
                             .setStatusImgRes(statusRes)
@@ -304,10 +309,15 @@ public class DrugDetailActivity extends Activity {
 
                             if (fromScene == RouteUtil.fromOnBoarding) {
                                 addToListText.setText("Next");
-                                addToList.setOnClickListener(v -> startActivity(new Intent(DrugDetailActivity.this, CheckListActivity.class)));
+                                addToList.setOnClickListener(v -> {
+                                    startActivity(new Intent(DrugDetailActivity.this, CheckListActivity.class));
+                                });
                             } else {
                                 addToListText.setText(R.string.view_drug_list);
-                                addToList.setOnClickListener(v -> gotoDrugList());
+                                addToList.setOnClickListener(v -> {
+                                    gotoDrugList();
+                                    finish();
+                                });
                             }
 
                         } else {
@@ -358,10 +368,10 @@ public class DrugDetailActivity extends Activity {
             sideEffectString.append(sideEffectPossibilities.get(i).getSideEffectName());
             sideEffectString.append("(");
             sideEffectString.append(sideEffectPossibilities.get(i).getPossibility());
-            sideEffectString.append("%)");
+            sideEffectString.append(")");
 
             if (i != sideEffectPossibilities.size() - 1) {
-                sideEffectString.append(",");
+                sideEffectString.append(", ");
             }
         }
 

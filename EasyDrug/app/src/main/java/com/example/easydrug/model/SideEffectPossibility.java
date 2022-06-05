@@ -8,7 +8,7 @@ public class SideEffectPossibility implements Serializable {
     @SerializedName("side_effect_name")
     String sideEffectName;
 
-    @SerializedName("possibility")
+    @SerializedName("probability")
     String possibility;
 
     @SerializedName("definition")
