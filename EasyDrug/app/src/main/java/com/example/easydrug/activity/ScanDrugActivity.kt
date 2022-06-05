@@ -126,6 +126,7 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
 
         showSuccessScan()
         if (result == null) {
+            hideSuccessScan()
             Toast.makeText(this, "Please make sure the barcode is big enough and in the center of the picture.", Toast.LENGTH_SHORT).show();
         }
         result?.let {

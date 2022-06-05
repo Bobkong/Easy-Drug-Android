@@ -20,6 +20,7 @@ public class SpeechUtil {
     private static SpeechConfig speechConfig;
     private static SpeechSynthesizer synthesizer;
     private static Thread thread;
+    private static String curText;
 
     public static void speechText(Activity activity, String text) {
         // Note: we need to request the permissions
@@ -37,9 +38,16 @@ public class SpeechUtil {
             synthesizer.StopSpeakingAsync();
         }
 
+
         thread = new Thread(() -> {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
+
+                if (curText != null && curText.equals(text)) {
+                    curText = null;
+                    return;
+                }
+                curText = text;
                 // Note: this will block the UI thread, so eventually, you want to register for the event
                 SpeechSynthesisResult result = synthesizer.SpeakText(text);
                 assert(result != null);
@@ -67,6 +75,7 @@ public class SpeechUtil {
 
     // when exit activity
     public static void destroy() {
+        curText = null;
         if (synthesizer != null) {
             synthesizer.StopSpeakingAsync();
             new Thread(new Runnable() {
@@ -74,7 +83,7 @@ public class SpeechUtil {
                 public void run() {
 
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
