@@ -18,7 +18,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
+        StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.transparent_theme_color));
 
         new Handler().postDelayed(() -> {
             boolean ifSignedUp = FileUtil.getSPBool(SplashActivity.this, Configs.ifSignedUpKey);

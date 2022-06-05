@@ -51,6 +51,7 @@
         <activity android:name=".activity.FoodInteractionActivity" />
         <activity android:name=".activity.ExploreActivity" />
         <activity android:name=".activity.DrugListActivity" />
+        <activity android:name=".activity.FeedbackActivity" />
 
 
     </application>

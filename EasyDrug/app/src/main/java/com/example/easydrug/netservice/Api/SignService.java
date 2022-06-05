@@ -2,6 +2,7 @@ package com.example.easydrug.netservice.Api;
 
 
 import com.example.easydrug.model.GeneralResponse;
+import com.example.easydrug.model.SendFeedbackParam;
 import com.example.easydrug.model.UpdateProfileParam;
 import com.example.easydrug.netservice.HttpResultFunc;
 import com.example.easydrug.netservice.EasyDrugServiceManager;
@@ -34,6 +35,12 @@ public class SignService {
 
     public Observable<GeneralResponse> updateProfile(String oldUsername, String newUsername, String newPassword){
         return signApi.updateProfile(new UpdateProfileParam(oldUsername, newUsername, newPassword))
+                .onErrorResumeNext(new HttpResultFunc<>())
+                .subscribeOn(Schedulers.io());
+    }
+
+    public Observable<GeneralResponse> sendFeedback(String username, String email, String title, String content){
+        return signApi.sendFeedback(new SendFeedbackParam(username, email, title, content))
                 .onErrorResumeNext(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io());
     }

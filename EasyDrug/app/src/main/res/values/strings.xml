@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">EasyMed</string>
-    <string name="home_learn_title">Do you know milk can\'t be taken with antibiotics?</string>
+    <string name="home_feedback_title">Enjoying our app so far? Let us know your feedback!</string>
     <string name="tap_here_to_edit_info">Tap here to edit info</string>
     <string name="disclaimer">*Disclaimer: These results are only a guideline. Check with your healthcare provider to determine if any adjustments to your medications are needed.</string>
     <string name="possibilities_string">Possibilities</string>

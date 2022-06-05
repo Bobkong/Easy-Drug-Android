@@ -4,6 +4,7 @@ package com.example.easydrug.netservice.Api;
 import io.reactivex.Observable;
 
 import com.example.easydrug.model.GeneralResponse;
+import com.example.easydrug.model.SendFeedbackParam;
 import com.example.easydrug.model.SignUserParam;
 import com.example.easydrug.model.UpdateProfileParam;
 
@@ -28,5 +29,10 @@ public interface SignApi {
     @POST("/updateProfile")
     Observable<GeneralResponse> updateProfile(
             @Body UpdateProfileParam params
+    );
+
+    @POST("/sendFeedback")
+    Observable<GeneralResponse> sendFeedback(
+            @Body SendFeedbackParam params
     );
 }

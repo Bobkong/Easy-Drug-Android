@@ -62,7 +62,7 @@ class MainActivity : FragmentActivity() {
 
 
         learnCl?.setOnClickListener {
-            startActivity(Intent(this, ExploreActivity::class.java))
+            startActivity(Intent(this, FeedbackActivity::class.java))
         }
 
         scanCl?.setOnClickListener {
