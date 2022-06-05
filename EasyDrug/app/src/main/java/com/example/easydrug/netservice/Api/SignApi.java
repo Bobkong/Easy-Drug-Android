@@ -25,7 +25,7 @@ public interface SignApi {
             );
 
     //sign in
-    @POST("/update_profile")
+    @POST("/updateProfile")
     Observable<GeneralResponse> updateProfile(
             @Body UpdateProfileParam params
     );

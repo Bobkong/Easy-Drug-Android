@@ -47,10 +47,7 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
         setContentView(R.layout.activity_scan_drug)
         StatusBarCompat.setStatusBarColor(this, this.resources.getColor(R.color.black))
 
-        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-            != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),1);
-        }
+
 
         mHintLl= findViewById(R.id.hint_ll)
         mSuccessImage = findViewById(R.id.successfully_scan)
@@ -75,6 +72,11 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
             }
 
 
+        }
+
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+            != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA),1);
         }
     }
 
@@ -235,6 +237,10 @@ class ScanDrugActivity: Activity(), QRCodeView.Delegate {
                     Toast.makeText(this, "Permission Request is Rejected!", Toast.LENGTH_LONG).show()
                     finish()
                 }
+            } else {
+                mZBarView?.startCamera()
+                mZBarView?.showScanRect()
+                mZBarView?.startSpot()
             }
         }
     }

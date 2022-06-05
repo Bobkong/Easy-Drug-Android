@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.easydrug.R;
+import com.githang.statusbar.StatusBarCompat;
 
 public class CheckListActivity extends Activity {
     private ConstraintLayout checkList;
@@ -17,6 +18,7 @@ public class CheckListActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onboardingchecklist);
+        StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
         checkList = findViewById(R.id.ready_togo);
         checkList.setOnClickListener(new View.OnClickListener() {
             @Override

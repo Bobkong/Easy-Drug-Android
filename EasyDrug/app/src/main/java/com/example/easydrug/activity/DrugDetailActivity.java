@@ -262,6 +262,10 @@ public class DrugDetailActivity extends Activity {
     }
 
     private final View.OnClickListener addToListListener = v -> {
+        if (drugDetail == null) {
+            Toast.makeText(DrugDetailActivity.this, "Please wait until the drug details are loaded", Toast.LENGTH_SHORT).show();
+            return;
+        }
         DrugService.getInstance().addDrug(FileUtil.getSPString(DrugDetailActivity.this, Configs.userNameKey), drugNameString, imageUrl, upc, descriptionString, drugDetail.getInteractionPairs())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GeneralResponse>() {
@@ -291,10 +295,21 @@ public class DrugDetailActivity extends Activity {
                             .setLeftButtonBg(R.drawable.grey_color_stroke_bg_8dp)
                             .setLeftButtonText("Cancel")
                             .setLeftButtonTextColor(R.color.grey)
-                            .setLeftButtonBg(R.drawable.theme_color_bg_8dp)
-                            .setLeftButtonText(rightButtonText)
-                            .setLeftButtonTextColor(R.color.white)
+                            .setRightButtonBg(R.drawable.theme_color_bg_8dp)
+                            .setRightButtonText(rightButtonText)
+                            .setRightButtonTextColor(R.color.white)
                             .show();
+
+                            addToListImage.setVisibility(View.GONE);
+
+                            if (fromScene == RouteUtil.fromOnBoarding) {
+                                addToListText.setText("Next");
+                                addToList.setOnClickListener(v -> startActivity(new Intent(DrugDetailActivity.this, CheckListActivity.class)));
+                            } else {
+                                addToListText.setText(R.string.view_drug_list);
+                                addToList.setOnClickListener(v -> gotoDrugList());
+                            }
+
                         } else {
                             statusRes = R.drawable.dialog_error;
                             dialogTitle = value.getMsg();

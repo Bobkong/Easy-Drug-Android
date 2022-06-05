@@ -11,7 +11,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="88dp"
+        android:paddingTop="48dp"
         android:paddingBottom="54dp"
         >
 

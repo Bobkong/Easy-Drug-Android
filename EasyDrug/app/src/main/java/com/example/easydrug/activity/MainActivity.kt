@@ -91,35 +91,6 @@ class MainActivity : FragmentActivity() {
 
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == 1) {
-            if (grantResults.isNotEmpty() && grantResults[0] !== PackageManager.PERMISSION_GRANTED) {
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(
-                        this@MainActivity,
-                        Manifest.permission.CAMERA
-                    )
-                ) {
-                    Toast.makeText(this, "Permission Request is Rejected!", Toast.LENGTH_LONG).show()
-
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri: Uri = Uri.fromParts("package", packageName, null)
-                    intent.data = uri
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(this, "Permission Request is Rejected!", Toast.LENGTH_LONG).show()
-                }
-            } else {
-                startActivity(Intent(this, ScanDrugActivity::class.java))
-            }
-        }
-    }
-
     private fun setFeatureWidth(view: View?) {
         val width = (UIUtils.getWidth(this) - UIUtils.dp2px(this, 64F)) / 2
         val params = view?.layoutParams
