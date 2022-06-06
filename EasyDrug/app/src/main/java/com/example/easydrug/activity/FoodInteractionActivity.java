@@ -24,6 +24,7 @@ import com.example.easydrug.Utils.FileUtil;
 import com.example.easydrug.Utils.FinishActivityEvent;
 import com.example.easydrug.Utils.SpeechUtil;
 import com.example.easydrug.adapter.FoodInteractionAdapter;
+import com.example.easydrug.model.FoodInteraction;
 import com.example.easydrug.model.FoodInteractionDetail;
 import com.example.easydrug.netservice.Api.DrugService;
 import com.githang.statusbar.StatusBarCompat;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import retrofit2.http.Body;
 
 public class FoodInteractionActivity extends Activity {
 
@@ -75,7 +77,7 @@ public class FoodInteractionActivity extends Activity {
 
         done.setOnClickListener(v -> {
             startActivity(new Intent(FoodInteractionActivity.this, MainActivity.class));
-            EventBus.getDefault().post(new FinishActivityEvent());
+            EventBus.getDefault().post(new FinishActivityEvent(FinishActivityEvent.SPEECH));
             finish();
         });
 
@@ -101,7 +103,13 @@ public class FoodInteractionActivity extends Activity {
 
                         if (value.getCode() == Configs.requestSuccess) {
 
-                            if (value.getInteractions() == null || value.getInteractions().isEmpty()) {
+                            boolean hasInteraction = false;
+                            for (FoodInteraction foodInteraction : value.getInteractions()) {
+                                if (foodInteraction != null && !foodInteraction.getDrugInteractions().isEmpty()) {
+                                    hasInteraction = true;
+                                }
+                            }
+                            if (!hasInteraction) {
                                 // no interactions
                                 noInteractionView.setVisibility(View.VISIBLE);
                                 checkAgain.setVisibility(View.VISIBLE);

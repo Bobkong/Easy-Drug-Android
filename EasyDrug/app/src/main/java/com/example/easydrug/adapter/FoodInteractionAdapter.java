@@ -10,10 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easydrug.R;
 import com.example.easydrug.model.FoodInteraction;
+import com.example.easydrug.model.ResourcesContent;
 import com.example.easydrug.viewholder.DisclaimerViewHolder;
 import com.example.easydrug.viewholder.FoodInteractionViewHolder;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class FoodInteractionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Activity activity;
@@ -50,7 +52,14 @@ public class FoodInteractionAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     public FoodInteractionAdapter(Activity activity, ArrayList<FoodInteraction> interactions) {
         this.activity = activity;
+        for (Iterator<FoodInteraction> iterator = interactions.iterator(); iterator.hasNext(); ) {
+            FoodInteraction value = iterator.next();
+            if (value.getDrugInteractions() == null || value.getDrugInteractions().isEmpty()) {
+                iterator.remove();
+            }
+        }
         this.mData = interactions;
+
     }
 
     @Override

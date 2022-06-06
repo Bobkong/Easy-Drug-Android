@@ -15,12 +15,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.easydrug.Configs;
 import com.example.easydrug.R;
 import com.example.easydrug.Utils.FileUtil;
+import com.example.easydrug.Utils.FinishActivityEvent;
 import com.example.easydrug.adapter.ContentAdapter;
 import com.example.easydrug.adapter.DrugListAdapter;
 import com.example.easydrug.adapter.TagAdapter;
 import com.example.easydrug.model.DrugList;
 import com.example.easydrug.netservice.Api.DrugService;
 import com.githang.statusbar.StatusBarCompat;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -38,7 +43,7 @@ public class DrugListActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drug_list);
         StatusBarCompat.setStatusBarColor(this, this.getResources().getColor(R.color.bg_color));
-
+        EventBus.getDefault().register(this);
         back = findViewById(R.id.back);
         edit = findViewById(R.id.edit);
         drugList = findViewById(R.id.drug_list);
@@ -116,5 +121,18 @@ public class DrugListActivity extends FragmentActivity {
 
                     }
                 });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(FinishActivityEvent event) {
+        if (event.scene == FinishActivityEvent.DRUGLIST) {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

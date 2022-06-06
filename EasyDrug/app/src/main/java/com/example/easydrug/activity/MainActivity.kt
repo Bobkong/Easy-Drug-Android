@@ -100,7 +100,9 @@ class MainActivity : FragmentActivity() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onEvent(event: FinishActivityEvent) {
-        finish()
+        if (event.scene == FinishActivityEvent.HOME) {
+            finish()
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

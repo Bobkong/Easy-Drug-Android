@@ -101,7 +101,9 @@ public class SpeechFoodResultActivity extends Activity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(FinishActivityEvent event) {
-        finish();
+        if (event.scene == FinishActivityEvent.SPEECH) {
+            finish();
+        }
     }
 
     @Override

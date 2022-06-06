@@ -146,7 +146,7 @@ public class ProfileActivity extends Activity {
                 FileUtil.deleteSPString(ProfileActivity.this, Configs.passwordKey);
                 startActivity(new Intent(ProfileActivity.this, LoginActivity.class));
                 finish();
-                EventBus.getDefault().post(new FinishActivityEvent());
+                EventBus.getDefault().post(new FinishActivityEvent(FinishActivityEvent.HOME));
             }).setTitle(getString(R.string.log_out_title))
                     .setStatusImgRes(R.drawable.dialog_warning)
                     .setRightButtonText("Log Out")

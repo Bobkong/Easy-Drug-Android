@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.example.easydrug.Configs;
 import com.example.easydrug.R;
 import com.example.easydrug.Utils.FileUtil;
+import com.example.easydrug.Utils.FinishActivityEvent;
 import com.example.easydrug.Utils.RouteUtil;
 import com.example.easydrug.Utils.SpeechUtil;
 import com.example.easydrug.Utils.UIUtils;
@@ -35,6 +36,8 @@ import com.example.easydrug.widget.ExpandTextView;
 import com.example.easydrug.widget.OneButtonDialog;
 import com.example.easydrug.widget.TwoButtonDialog;
 import com.githang.statusbar.StatusBarCompat;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -254,7 +257,6 @@ public class DrugDetailActivity extends Activity {
             result.append(interaction.getDrugName());
             result.append("The interaction probability is ");
             result.append(interaction.getProbability());
-            result.append("%");
             result.append(".");
             result.append(interaction.getInteractionDesc());
         }
@@ -262,6 +264,7 @@ public class DrugDetailActivity extends Activity {
     }
 
     private void gotoDrugList() {
+        EventBus.getDefault().post(new FinishActivityEvent(FinishActivityEvent.DRUGLIST));
         startActivity(new Intent(DrugDetailActivity.this, DrugListActivity.class));
     }
 
@@ -270,7 +273,11 @@ public class DrugDetailActivity extends Activity {
             Toast.makeText(DrugDetailActivity.this, "Please wait until the drug details are loaded", Toast.LENGTH_SHORT).show();
             return;
         }
-        DrugService.getInstance().addDrug(FileUtil.getSPString(DrugDetailActivity.this, Configs.userNameKey), drugNameString, imageUrl, upc, descriptionString, drugDetail.getInteractionPairs())
+        ArrayList<ArrayList<String>> pairs = new ArrayList<>();
+        if (!drugDetail.isDrugListEmpty()) {
+            pairs = drugDetail.getInteractionPairs();
+        }
+        DrugService.getInstance().addDrug(FileUtil.getSPString(DrugDetailActivity.this, Configs.userNameKey), drugNameString, imageUrl, upc, descriptionString, pairs)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<GeneralResponse>() {
                     @Override

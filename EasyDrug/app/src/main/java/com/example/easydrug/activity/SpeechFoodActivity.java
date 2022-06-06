@@ -96,6 +96,7 @@ public class SpeechFoodActivity extends Activity {
                         Log.i(TAG, "go to speech food result activity");
                         startActivity(intent);
                         analyzeSpeech.setVisibility(View.GONE);
+                        recordingResult = new StringBuilder();
                     }
                 });
             }, 2000);
@@ -114,7 +115,9 @@ public class SpeechFoodActivity extends Activity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(FinishActivityEvent event) {
-        finish();
+        if (event.scene == FinishActivityEvent.SPEECH) {
+            finish();
+        }
     }
 
     @Override
